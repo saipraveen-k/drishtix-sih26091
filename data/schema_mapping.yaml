@@ -1,0 +1,82 @@
+# Schema mapping configuration for DrishtiX Data Ingestion Pipeline
+# Allows mapping arbitrary column names from raw datasets to standard internal fields without code changes.
+
+column_mappings:
+  latitude:
+    - lat
+    - latitude
+    - y
+    - LATITUDE
+    - Latitude
+  longitude:
+    - lon
+    - lng
+    - longitude
+    - x
+    - LONGITUDE
+    - Longitude
+  state:
+    - state
+    - state_name
+    - State
+    - STATE
+  district:
+    - district
+    - district_name
+    - dist_name
+    - District
+    - DISTRICT
+  village:
+    - village
+    - village_name
+    - gram
+    - gram_panchayat
+    - Village
+    - VILLAGE
+  pincode:
+    - pincode
+    - pin_code
+    - zip
+    - zipcode
+    - ZIPCODE
+  business_name:
+    - business
+    - business_type
+    - enterprise
+    - enterprise_type
+    - activity
+    - business_name
+    - name
+    - BusinessName
+  demand_index:
+    - demand
+    - demand_index
+    - market_demand
+    - demand_score
+    - Demand
+  competition_density:
+    - competition
+    - competition_density
+    - competitor_count
+    - competition_score
+    - Competition
+  resource_score:
+    - resource
+    - resource_score
+    - resource_availability
+    - ResourceScore
+  infra_score:
+    - infra_score
+    - infrastructure
+    - infrastructure_score
+    - InfraScore
+  investment_min:
+    - investment_min
+    - min_investment
+    - initial_capital_min
+    - InvestmentMin
+  investment_max:
+    - investment_max
+    - max_investment
+    - initial_capital_max
+    - InvestmentMax

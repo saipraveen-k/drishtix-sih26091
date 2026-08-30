@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: drishtix-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: drishtix_db
+      POSTGRES_USER: drishtix_user
+      POSTGRES_PASSWORD: drishtix_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: drishtix-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://drishtix_user:drishtix_password@postgres:5432/drishtix_db
+      - JWT_SECRET=drishtix_sih2026_super_secret_key_987654321
+      - LLM_PROVIDER=mock
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: drishtix-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

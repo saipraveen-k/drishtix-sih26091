@@ -1,0 +1,304 @@
+[
+  {
+    "id": "biz_millet_01",
+    "name": "Millet Processing & Packaging",
+    "category": "Food Processing",
+    "description": "Primary processing, cleaning, de-hulling, and branded retail packaging of ragi, bajra, and jowar for nearby urban markets.",
+    "required_skills": [
+      "food processing",
+      "agriculture",
+      "retail"
+    ],
+    "investment_min": 120000,
+    "investment_max": 250000,
+    "working_capital": 35000,
+    "resource_requirements": [
+      "millet crops",
+      "water supply",
+      "packaging foil"
+    ],
+    "infrastructure_requirements": [
+      "single-phase power",
+      "dry shed",
+      "road connectivity"
+    ],
+    "risk_level": "LOW",
+    "seasonality": "Post-Harvest (Oct-Mar Peak)",
+    "growth_potential": "HIGH",
+    "typical_cost_structure": {
+      "raw_material_pct": 50,
+      "labor_pct": 15,
+      "electricity_and_rent_pct": 10,
+      "packaging_and_transport_pct": 10,
+      "net_margin_pct": 15,
+      "typical_monthly_revenue": 85000
+    }
+  },
+  {
+    "id": "biz_spice_02",
+    "name": "Micro Spice Grinding & Blending",
+    "category": "Food Processing",
+    "description": "Grinding raw turmeric, chilli, coriander, and preparing authentic regional spice blends for local shops and direct consumers.",
+    "required_skills": [
+      "food processing",
+      "handicraft",
+      "retail"
+    ],
+    "investment_min": 80000,
+    "investment_max": 180000,
+    "working_capital": 25000,
+    "resource_requirements": [
+      "raw spices",
+      "pulverizer machine"
+    ],
+    "infrastructure_requirements": [
+      "electricity",
+      "ventilated shed"
+    ],
+    "risk_level": "LOW",
+    "seasonality": "Year-Round",
+    "growth_potential": "MEDIUM",
+    "typical_cost_structure": {
+      "raw_material_pct": 55,
+      "labor_pct": 12,
+      "electricity_and_rent_pct": 8,
+      "packaging_and_transport_pct": 7,
+      "net_margin_pct": 18,
+      "typical_monthly_revenue": 65000
+    }
+  },
+  {
+    "id": "biz_dairy_03",
+    "name": "Mini Dairy & Milk Product Processing",
+    "category": "Livestock & Dairy",
+    "description": "Value addition to raw milk by producing paneer, curd, ghee, and butter for local sweet shops and weekly village markets.",
+    "required_skills": [
+      "livestock",
+      "food processing"
+    ],
+    "investment_min": 150000,
+    "investment_max": 320000,
+    "working_capital": 45000,
+    "resource_requirements": [
+      "raw milk",
+      "chilling equipment",
+      "testing kit"
+    ],
+    "infrastructure_requirements": [
+      "continuous power",
+      "cold storage",
+      "water"
+    ],
+    "risk_level": "MEDIUM",
+    "seasonality": "Festival Peak (Oct-Jan)",
+    "growth_potential": "HIGH",
+    "typical_cost_structure": {
+      "raw_material_pct": 60,
+      "labor_pct": 10,
+      "electricity_and_rent_pct": 12,
+      "packaging_and_transport_pct": 5,
+      "net_margin_pct": 13,
+      "typical_monthly_revenue": 110000
+    }
+  },
+  {
+    "id": "biz_solar_04",
+    "name": "Solar Pump Repair & Energy Maintenance Kiosk",
+    "category": "Repair & Services",
+    "description": "Installation support, battery maintenance, inverter repair, and panel cleaning for agricultural solar pumps and home solar systems.",
+    "required_skills": [
+      "repair/services",
+      "digital services"
+    ],
+    "investment_min": 60000,
+    "investment_max": 140000,
+    "working_capital": 20000,
+    "resource_requirements": [
+      "multimeter",
+      "solar spare parts",
+      "toolkit"
+    ],
+    "infrastructure_requirements": [
+      "small shop",
+      "two-wheeler transport"
+    ],
+    "risk_level": "LOW",
+    "seasonality": "Summer Peak (Feb-Jun)",
+    "growth_potential": "HIGH",
+    "typical_cost_structure": {
+      "raw_material_pct": 30,
+      "labor_pct": 25,
+      "electricity_and_rent_pct": 10,
+      "packaging_and_transport_pct": 10,
+      "net_margin_pct": 25,
+      "typical_monthly_revenue": 55000
+    }
+  },
+  {
+    "id": "biz_biofert_05",
+    "name": "Bio-Fertilizer & Vermicompost Unit",
+    "category": "Agriculture",
+    "description": "Converting farm waste and cattle dung into high-grade organic vermicompost for eco-friendly farmers and horticulture nurseries.",
+    "required_skills": [
+      "agriculture",
+      "livestock"
+    ],
+    "investment_min": 70000,
+    "investment_max": 160000,
+    "working_capital": 20000,
+    "resource_requirements": [
+      "cow dung",
+      "earthworms",
+      "crop residue"
+    ],
+    "infrastructure_requirements": [
+      "shaded land",
+      "water source"
+    ],
+    "risk_level": "LOW",
+    "seasonality": "Sowing Season Peak (Jun-Jul, Oct-Nov)",
+    "growth_potential": "MEDIUM",
+    "typical_cost_structure": {
+      "raw_material_pct": 35,
+      "labor_pct": 25,
+      "electricity_and_rent_pct": 5,
+      "packaging_and_transport_pct": 15,
+      "net_margin_pct": 20,
+      "typical_monthly_revenue": 60000
+    }
+  },
+  {
+    "id": "biz_poultry_06",
+    "name": "Backyard Layer Poultry & Egg Distribution",
+    "category": "Livestock & Dairy",
+    "description": "Rearing country chicken (Kadaknath/Gramapriya) for organic egg production and direct supply to local hotels and health-conscious buyers.",
+    "required_skills": [
+      "livestock",
+      "retail"
+    ],
+    "investment_min": 90000,
+    "investment_max": 200000,
+    "working_capital": 30000,
+    "resource_requirements": [
+      "poultry shed",
+      "chicks",
+      "feed",
+      "vaccines"
+    ],
+    "infrastructure_requirements": [
+      "fenced yard",
+      "water connection"
+    ],
+    "risk_level": "MEDIUM",
+    "seasonality": "Winter Peak (Nov-Feb)",
+    "growth_potential": "MEDIUM",
+    "typical_cost_structure": {
+      "raw_material_pct": 50,
+      "labor_pct": 15,
+      "electricity_and_rent_pct": 8,
+      "packaging_and_transport_pct": 7,
+      "net_margin_pct": 20,
+      "typical_monthly_revenue": 75000
+    }
+  },
+  {
+    "id": "biz_craft_07",
+    "name": "Handicraft & Jute Product Eco-Packaging",
+    "category": "Handicraft & Manufacturing",
+    "description": "Manufacturing jute carry bags, eco-friendly cloth pouches, and traditional decorative items for local retail markets and export aggregators.",
+    "required_skills": [
+      "handicraft",
+      "manufacturing"
+    ],
+    "investment_min": 50000,
+    "investment_max": 120000,
+    "working_capital": 18000,
+    "resource_requirements": [
+      "jute fabric",
+      "sewing machines",
+      "thread"
+    ],
+    "infrastructure_requirements": [
+      "small room",
+      "electricity"
+    ],
+    "risk_level": "LOW",
+    "seasonality": "Festival/Wedding Peak (Sep-Jan)",
+    "growth_potential": "MEDIUM",
+    "typical_cost_structure": {
+      "raw_material_pct": 45,
+      "labor_pct": 25,
+      "electricity_and_rent_pct": 8,
+      "packaging_and_transport_pct": 5,
+      "net_margin_pct": 17,
+      "typical_monthly_revenue": 48000
+    }
+  },
+  {
+    "id": "biz_digital_08",
+    "name": "Rural Digital Service & E-Governance Center (CSC)",
+    "category": "Digital Services",
+    "description": "Providing government scheme registrations, banking correspondent services, PAN/Aadhaar updates, utility bill payments, and online crop insurance assistance.",
+    "required_skills": [
+      "digital services",
+      "retail"
+    ],
+    "investment_min": 40000,
+    "investment_max": 100000,
+    "working_capital": 15000,
+    "resource_requirements": [
+      "computer",
+      "biometric scanner",
+      "printer",
+      "internet"
+    ],
+    "infrastructure_requirements": [
+      "shop on main road",
+      "uninterrupted power"
+    ],
+    "risk_level": "LOW",
+    "seasonality": "Year-Round (Scheme Application Deadlines Peak)",
+    "growth_potential": "HIGH",
+    "typical_cost_structure": {
+      "raw_material_pct": 10,
+      "labor_pct": 30,
+      "electricity_and_rent_pct": 20,
+      "packaging_and_transport_pct": 5,
+      "net_margin_pct": 35,
+      "typical_monthly_revenue": 42000
+    }
+  },
+  {
+    "id": "biz_customhiring_09",
+    "name": "Custom Hiring Center for Small Farm Implements",
+    "category": "Agriculture & Services",
+    "description": "Renting out micro-tillers, power weeders, battery sprayers, and seed drills to smallholder farmers on an hourly or daily rental model.",
+    "required_skills": [
+      "agriculture",
+      "repair/services"
+    ],
+    "investment_min": 180000,
+    "investment_max": 350000,
+    "working_capital": 30000,
+    "resource_requirements": [
+      "power tiller",
+      "weeders",
+      "sprayers"
+    ],
+    "infrastructure_requirements": [
+      "secure storage shed",
+      "maintenance tools"
+    ],
+    "risk_level": "MEDIUM",
+    "seasonality": "Monsoon & Sowing Peak (Jun-Aug, Nov-Dec)",
+    "growth_potential": "HIGH",
+    "typical_cost_structure": {
+      "raw_material_pct": 20,
+      "labor_pct": 20,
+      "electricity_and_rent_pct": 10,
+      "packaging_and_transport_pct": 15,
+      "net_margin_pct": 35,
+      "typical_monthly_revenue": 95000
+    }
+  }
+]

@@ -1,0 +1,9 @@
+state,district,village,pincode,latitude,longitude,demand_index,competition_density,resource_score,infra_score,population,nearest_market_km,road_connectivity,feat_demand_score,feat_competition_score,feat_resource_availability,feat_infrastructure_score,feat_market_opportunity,feat_growth_indicator,feat_location_suitability,feat_capital_compatibility,feat_skill_compatibility,feat_risk_indicator
+Andhra Pradesh,Anantapur,Kudair,515711,14.6819,77.4521,85,38,78,75,14500,4.5,GOOD,85,62,78,75,73.5,82.2,76.0,85.0,80.0,68.5
+Andhra Pradesh,Anantapur,Raptadu,515722,14.612,77.601,82,42,80,72,12800,6.0,GOOD,82,58,80,72,70.0,81.2,73.8,85.0,80.0,65.0
+Telangana,Nizamabad,Armoor,503224,18.7892,78.2861,88,45,84,80,22000,2.0,EXCELLENT,88,55,84,80,71.5,86.4,78.2,85.0,80.0,67.5
+Maharashtra,Solapur,Sangola,413307,17.4333,75.1955,79,35,82,68,18500,5.5,MODERATE,79,65,82,68,72.0,80.2,73.5,85.0,80.0,66.5
+Tamil Nadu,Coimbatore,Pollachi Rural,642001,10.6609,77.0048,90,50,88,85,28000,1.5,EXCELLENT,90,50,88,85,70.0,89.2,80.1,85.0,80.0,67.5
+Uttar Pradesh,Varanasi,Sevapuri,221403,25.3216,82.8021,86,40,76,70,16200,8.0,MODERATE,86,60,76,70,73.0,82.0,74.0,85.0,80.0,65.0
+Karnataka,Ramanagara,Channapatna Rural,562160,12.6517,77.2089,84,36,81,78,19800,3.2,GOOD,84,64,81,78,74.0,82.8,77.6,85.0,80.0,71.0
+Rajasthan,Nagaur,Merta Rural,341510,26.6491,74.0371,77,30,75,65,13400,7.5,FAIR,77,70,75,65,73.5,76.2,71.6,85.0,80.0,67.5

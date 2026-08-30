@@ -1,0 +1,107 @@
+[
+  {
+    "scheme_id": "sch_pmegp_01",
+    "name": "Prime Minister's Employment Generation Programme (PMEGP)",
+    "nodal_agency": "KVIC / Ministry of MSME",
+    "target_categories": ["Food Processing", "Manufacturing", "Handicraft", "Repair & Services"],
+    "max_project_cost": 5000000,
+    "subsidy_rate": {
+      "rural_general": "25%",
+      "rural_special": "35%"
+    },
+    "eligibility_criteria": {
+      "min_age": 18,
+      "min_education": "8th Pass for manufacturing > 10 Lakhs",
+      "new_project_only": true
+    },
+    "required_documents": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Project Report (DPR)",
+      "Educational Qualification Certificate",
+      "Category/Caste Certificate (if applicable)",
+      "Rural Area Certificate from Tehsildar"
+    ],
+    "description": "Credit-linked subsidy program to generate self-employment micro-enterprises in non-farm rural sectors."
+  },
+  {
+    "scheme_id": "sch_pmfme_02",
+    "name": "PM Formalisation of Micro Food Processing Enterprises (PMFME)",
+    "nodal_agency": "Ministry of Food Processing Industries (MoFPI)",
+    "target_categories": ["Food Processing", "Livestock & Dairy", "Agriculture"],
+    "max_subsidy": 1000000,
+    "subsidy_rate": "35% of eligible project cost",
+    "eligibility_criteria": {
+      "individual_or_group": "Individual micro food processing units",
+      "one_district_one_product": "Preferred alignment with ODOP crop"
+    },
+    "required_documents": [
+      "Aadhaar Card",
+      "FSSAI Basic Registration",
+      "Bank Statement (Last 6 Months)",
+      "Proof of Ownership/Lease for Premises",
+      "Detailed Project Report"
+    ],
+    "description": "Provides financial, technical, and business support for micro food processing enterprises under One District One Product (ODOP)."
+  },
+  {
+    "scheme_id": "sch_mudra_03",
+    "name": "Pradhan Mantri MUDRA Yojana (PMMY)",
+    "nodal_agency": "Department of Financial Services / MUDRA Bank",
+    "target_categories": ["Digital Services", "Retail", "Repair & Services", "Livestock & Dairy", "Handicraft"],
+    "max_loan": 1000000,
+    "categories": {
+      "Shishu": "Loans up to ₹50,000",
+      "Kishore": "Loans above ₹50,000 to ₹5,00,000",
+      "Tarun": "Loans above ₹5,00,000 to ₹10,00,000"
+    },
+    "eligibility_criteria": {
+      "collateral_free": true,
+      "target_group": "Non-corporate, non-farm small/micro enterprises"
+    },
+    "required_documents": [
+      "Aadhaar Card",
+      "Voter ID / Driving License",
+      "Business Address Proof",
+      "Quotation of Machinery / Items to be purchased",
+      "Bank Statement (Last 6 Months)"
+    ],
+    "description": "Collateral-free micro financing for small businesses across Shishu, Kishore, and Tarun loan buckets."
+  },
+  {
+    "scheme_id": "sch_nrlm_04",
+    "name": "Deendayal Antyodaya Yojana - NRLM (Micro Enterprise Support)",
+    "nodal_agency": "Ministry of Rural Development",
+    "target_categories": ["Handicraft", "Food Processing", "Livestock & Dairy", "Agriculture"],
+    "max_loan": 500000,
+    "eligibility_criteria": {
+      "target_group": "Self-Help Group (SHG) members and rural women entrepreneurs",
+      "repayment_track": "Good credit history in SHG"
+    },
+    "required_documents": [
+      "SHG Membership Certificate",
+      "Aadhaar Card",
+      "Passbook of SHG Bank Account",
+      "Micro-Investment Plan (MIP)"
+    ],
+    "description": "Subsidized interest loans and revolving funds for SHG-affiliated women entrepreneurs embarking on micro-enterprises."
+  },
+  {
+    "scheme_id": "sch_aif_05",
+    "name": "Agriculture Infrastructure Fund (AIF)",
+    "nodal_agency": "Ministry of Agriculture and Farmers Welfare",
+    "target_categories": ["Agriculture", "Food Processing", "Agriculture & Services"],
+    "max_loan": 20000000,
+    "interest_subvention": "3% per annum up to ₹2 Crore for 7 years",
+    "eligibility_criteria": {
+      "target_group": "Agri-entrepreneurs, FPOs, SHGs, Primary Agricultural Credit Societies"
+    },
+    "required_documents": [
+      "Aadhaar / PAN Card",
+      "Land Ownership / Lease Records",
+      "Detailed Project Report (DPR)",
+      "Bank Account Details"
+    ],
+    "description": "Medium-long term debt financing facility for investment in viable projects for post-harvest management infrastructure and community farming assets."
+  }
+]

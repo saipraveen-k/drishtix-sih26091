@@ -1,0 +1,270 @@
+[
+  {
+    "filename": "demo_businesses.json",
+    "format": "JSON",
+    "rows": 9,
+    "columns": 14,
+    "column_names": [
+      "id",
+      "name",
+      "category",
+      "description",
+      "required_skills",
+      "investment_min",
+      "investment_max",
+      "working_capital",
+      "resource_requirements",
+      "infrastructure_requirements",
+      "risk_level",
+      "seasonality",
+      "growth_potential",
+      "typical_cost_structure"
+    ],
+    "data_types": {
+      "id": "object",
+      "name": "object",
+      "category": "object",
+      "description": "object",
+      "required_skills": "object",
+      "investment_min": "int64",
+      "investment_max": "int64",
+      "working_capital": "int64",
+      "resource_requirements": "object",
+      "infrastructure_requirements": "object",
+      "risk_level": "object",
+      "seasonality": "object",
+      "growth_potential": "object",
+      "typical_cost_structure": "object"
+    },
+    "missing_values_count": 0,
+    "missing_values_pct": 0.0,
+    "missing_per_column": {},
+    "duplicate_rows": 0,
+    "possible_geographic_columns": [],
+    "possible_business_columns": [
+      "name",
+      "category"
+    ],
+    "unique_states_sample": [],
+    "unique_districts_sample": [],
+    "unique_locations_sample": [],
+    "numerical_ranges": {
+      "investment_min": {
+        "min": 40000.0,
+        "max": 180000.0,
+        "mean": 93333.33
+      },
+      "investment_max": {
+        "min": 100000.0,
+        "max": 350000.0,
+        "mean": 202222.22
+      },
+      "working_capital": {
+        "min": 15000.0,
+        "max": 45000.0,
+        "mean": 26444.44
+      }
+    },
+    "suspicious_values": []
+  },
+  {
+    "filename": "demo_market_data.csv",
+    "format": "CSV",
+    "rows": 8,
+    "columns": 13,
+    "column_names": [
+      "state",
+      "district",
+      "village",
+      "pincode",
+      "latitude",
+      "longitude",
+      "demand_index",
+      "competition_density",
+      "resource_score",
+      "infra_score",
+      "population",
+      "nearest_market_km",
+      "road_connectivity"
+    ],
+    "data_types": {
+      "state": "object",
+      "district": "object",
+      "village": "object",
+      "pincode": "int64",
+      "latitude": "float64",
+      "longitude": "float64",
+      "demand_index": "int64",
+      "competition_density": "int64",
+      "resource_score": "int64",
+      "infra_score": "int64",
+      "population": "int64",
+      "nearest_market_km": "float64",
+      "road_connectivity": "object"
+    },
+    "missing_values_count": 0,
+    "missing_values_pct": 0.0,
+    "missing_per_column": {},
+    "duplicate_rows": 0,
+    "possible_geographic_columns": [
+      "state",
+      "district",
+      "village",
+      "pincode",
+      "latitude",
+      "longitude",
+      "population"
+    ],
+    "possible_business_columns": [],
+    "unique_states_sample": [
+      "Andhra Pradesh",
+      "Telangana",
+      "Maharashtra",
+      "Tamil Nadu",
+      "Uttar Pradesh",
+      "Karnataka",
+      "Rajasthan"
+    ],
+    "unique_districts_sample": [
+      "Anantapur",
+      "Nizamabad",
+      "Solapur",
+      "Coimbatore",
+      "Varanasi",
+      "Ramanagara",
+      "Nagaur"
+    ],
+    "unique_locations_sample": [
+      "Kudair",
+      "Raptadu",
+      "Armoor",
+      "Sangola",
+      "Pollachi Rural",
+      "Sevapuri",
+      "Channapatna Rural",
+      "Merta Rural"
+    ],
+    "numerical_ranges": {
+      "pincode": {
+        "min": 221403.0,
+        "max": 642001.0,
+        "mean": 464379.75
+      },
+      "latitude": {
+        "min": 10.6609,
+        "max": 26.6491,
+        "mean": 17.6
+      },
+      "longitude": {
+        "min": 74.0371,
+        "max": 82.8021,
+        "mean": 77.45
+      },
+      "demand_index": {
+        "min": 77.0,
+        "max": 90.0,
+        "mean": 83.88
+      },
+      "competition_density": {
+        "min": 30.0,
+        "max": 50.0,
+        "mean": 39.5
+      },
+      "resource_score": {
+        "min": 75.0,
+        "max": 88.0,
+        "mean": 80.5
+      },
+      "infra_score": {
+        "min": 65.0,
+        "max": 85.0,
+        "mean": 74.12
+      },
+      "population": {
+        "min": 12800.0,
+        "max": 28000.0,
+        "mean": 18150.0
+      },
+      "nearest_market_km": {
+        "min": 1.5,
+        "max": 8.0,
+        "mean": 4.78
+      }
+    },
+    "suspicious_values": [
+      "Column 'population' contains out-of-India latitude values (12800.0 to 28000.0)."
+    ]
+  },
+  {
+    "filename": "demo_schemes.json",
+    "format": "JSON",
+    "rows": 5,
+    "columns": 13,
+    "column_names": [
+      "scheme_id",
+      "name",
+      "nodal_agency",
+      "target_categories",
+      "max_project_cost",
+      "subsidy_rate",
+      "eligibility_criteria",
+      "required_documents",
+      "description",
+      "max_subsidy",
+      "max_loan",
+      "categories",
+      "interest_subvention"
+    ],
+    "data_types": {
+      "scheme_id": "object",
+      "name": "object",
+      "nodal_agency": "object",
+      "target_categories": "object",
+      "max_project_cost": "float64",
+      "subsidy_rate": "object",
+      "eligibility_criteria": "object",
+      "required_documents": "object",
+      "description": "object",
+      "max_subsidy": "float64",
+      "max_loan": "float64",
+      "categories": "object",
+      "interest_subvention": "object"
+    },
+    "missing_values_count": 21,
+    "missing_values_pct": 32.31,
+    "missing_per_column": {
+      "max_project_cost": 4,
+      "subsidy_rate": 3,
+      "max_subsidy": 4,
+      "max_loan": 2,
+      "categories": 4,
+      "interest_subvention": 4
+    },
+    "duplicate_rows": 0,
+    "possible_geographic_columns": [],
+    "possible_business_columns": [
+      "name"
+    ],
+    "unique_states_sample": [],
+    "unique_districts_sample": [],
+    "unique_locations_sample": [],
+    "numerical_ranges": {
+      "max_project_cost": {
+        "min": 5000000.0,
+        "max": 5000000.0,
+        "mean": 5000000.0
+      },
+      "max_subsidy": {
+        "min": 1000000.0,
+        "max": 1000000.0,
+        "mean": 1000000.0
+      },
+      "max_loan": {
+        "min": 500000.0,
+        "max": 20000000.0,
+        "mean": 7166666.67
+      }
+    },
+    "suspicious_values": []
+  }
+]

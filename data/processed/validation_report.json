@@ -1,0 +1,20 @@
+{
+  "file_path": "data/raw/demo_market_data.csv",
+  "rows": 8,
+  "columns": 13,
+  "null_pct": 0.0,
+  "duplicates": 0,
+  "mapped_columns": {
+    "latitude": "latitude",
+    "longitude": "longitude",
+    "state": "state",
+    "district": "district",
+    "village": "village",
+    "pincode": "pincode",
+    "demand_index": "demand_index",
+    "competition_density": "competition_density",
+    "resource_score": "resource_score",
+    "infra_score": "infra_score"
+  },
+  "quality": "HIGH"
+}

@@ -1,0 +1,9 @@
+state,district,village,pincode,latitude,longitude,demand_index,competition_density,resource_score,infra_score,population,nearest_market_km,road_connectivity
+Andhra Pradesh,Anantapur,Kudair,515711,14.6819,77.4521,85,38,78,75,14500,4.5,GOOD
+Andhra Pradesh,Anantapur,Raptadu,515722,14.612,77.601,82,42,80,72,12800,6.0,GOOD
+Telangana,Nizamabad,Armoor,503224,18.7892,78.2861,88,45,84,80,22000,2.0,EXCELLENT
+Maharashtra,Solapur,Sangola,413307,17.4333,75.1955,79,35,82,68,18500,5.5,MODERATE
+Tamil Nadu,Coimbatore,Pollachi Rural,642001,10.6609,77.0048,90,50,88,85,28000,1.5,EXCELLENT
+Uttar Pradesh,Varanasi,Sevapuri,221403,25.3216,82.8021,86,40,76,70,16200,8.0,MODERATE
+Karnataka,Ramanagara,Channapatna Rural,562160,12.6517,77.2089,84,36,81,78,19800,3.2,GOOD
+Rajasthan,Nagaur,Merta Rural,341510,26.6491,74.0371,77,30,75,65,13400,7.5,FAIR
