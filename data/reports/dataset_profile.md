@@ -8,7 +8,8 @@ Generated for 3 raw dataset files in `data/raw/`.
 - **Missing Values**: 0 (0.0%)
 - **Duplicate Rows**: 0
 - **Geographic Columns**: `` 
-- **Business Category Columns**: `name, category` 
+- **Business Columns**: `name, category` 
+- **Market Indicator Columns**: `resource_requirements, infrastructure_requirements, typical_cost_structure` 
 
 ### Numerical Ranges
 | Column | Min | Max | Mean |
@@ -25,7 +26,8 @@ Generated for 3 raw dataset files in `data/raw/`.
 - **Missing Values**: 0 (0.0%)
 - **Duplicate Rows**: 0
 - **Geographic Columns**: `state, district, village, pincode, latitude, longitude, population` 
-- **Business Category Columns**: `` 
+- **Business Columns**: `` 
+- **Market Indicator Columns**: `demand_index, competition_density, resource_score, infra_score` 
 
 ### Numerical Ranges
 | Column | Min | Max | Mean |
@@ -51,7 +53,8 @@ Generated for 3 raw dataset files in `data/raw/`.
 - **Missing Values**: 21 (32.31%)
 - **Duplicate Rows**: 0
 - **Geographic Columns**: `` 
-- **Business Category Columns**: `name` 
+- **Business Columns**: `name` 
+- **Market Indicator Columns**: `max_project_cost` 
 
 ### Numerical Ranges
 | Column | Min | Max | Mean |

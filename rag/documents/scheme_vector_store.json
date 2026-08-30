@@ -1,120 +1,62 @@
 [
   {
-    "scheme_id": "sch_pmegp_01",
-    "name": "Prime Minister's Employment Generation Programme (PMEGP)",
-    "nodal_agency": "KVIC / Ministry of MSME",
-    "text": "Prime Minister's Employment Generation Programme (PMEGP). Credit-linked subsidy program to generate self-employment micro-enterprises in non-farm rural sectors. Target Categories: Food Processing, Manufacturing, Handicraft, Repair & Services. Eligibility: {\"min_age\": 18, \"min_education\": \"8th Pass for manufacturing > 10 Lakhs\", \"new_project_only\": true} Required Docs: Aadhaar Card, PAN Card, Project Report (DPR), Educational Qualification Certificate, Category/Caste Certificate (if applicable), Rural Area Certificate from Tehsildar.",
-    "required_documents": [
-      "Aadhaar Card",
-      "PAN Card",
-      "Project Report (DPR)",
-      "Educational Qualification Certificate",
-      "Category/Caste Certificate (if applicable)",
-      "Rural Area Certificate from Tehsildar"
-    ],
-    "target_categories": [
-      "Food Processing",
-      "Manufacturing",
-      "Handicraft",
-      "Repair & Services"
-    ],
+    "document_id": "sch_pmegp_01",
+    "title": "Prime Minister's Employment Generation Programme (PMEGP)",
+    "content": "Prime Minister's Employment Generation Programme (PMEGP). Nodal Agency: KVIC / Ministry of MSME. Credit-linked subsidy program to generate self-employment micro-enterprises in non-farm rural sectors. Benefits: {}",
     "metadata": {
-      "source": "Government Scheme Repository",
-      "document": "sch_pmegp_01.json",
-      "date": "2026-01-01"
+      "source": "Ministry of Micro, Small & Medium Enterprises (MoMSME)",
+      "dataset": "demo_schemes.json",
+      "date_year": "2026",
+      "location": "Pan-India / Rural",
+      "nodal_agency": "KVIC / Ministry of MSME"
     }
   },
   {
-    "scheme_id": "sch_pmfme_02",
-    "name": "PM Formalisation of Micro Food Processing Enterprises (PMFME)",
-    "nodal_agency": "Ministry of Food Processing Industries (MoFPI)",
-    "text": "PM Formalisation of Micro Food Processing Enterprises (PMFME). Provides financial, technical, and business support for micro food processing enterprises under One District One Product (ODOP). Target Categories: Food Processing, Livestock & Dairy, Agriculture. Eligibility: {\"individual_or_group\": \"Individual micro food processing units\", \"one_district_one_product\": \"Preferred alignment with ODOP crop\"} Required Docs: Aadhaar Card, FSSAI Basic Registration, Bank Statement (Last 6 Months), Proof of Ownership/Lease for Premises, Detailed Project Report.",
-    "required_documents": [
-      "Aadhaar Card",
-      "FSSAI Basic Registration",
-      "Bank Statement (Last 6 Months)",
-      "Proof of Ownership/Lease for Premises",
-      "Detailed Project Report"
-    ],
-    "target_categories": [
-      "Food Processing",
-      "Livestock & Dairy",
-      "Agriculture"
-    ],
+    "document_id": "sch_pmfme_02",
+    "title": "PM Formalisation of Micro Food Processing Enterprises (PMFME)",
+    "content": "PM Formalisation of Micro Food Processing Enterprises (PMFME). Nodal Agency: Ministry of Food Processing Industries (MoFPI). Provides financial, technical, and business support for micro food processing enterprises under One District One Product (ODOP). Benefits: {}",
     "metadata": {
-      "source": "Government Scheme Repository",
-      "document": "sch_pmfme_02.json",
-      "date": "2026-01-01"
+      "source": "Ministry of Micro, Small & Medium Enterprises (MoMSME)",
+      "dataset": "demo_schemes.json",
+      "date_year": "2026",
+      "location": "Pan-India / Rural",
+      "nodal_agency": "Ministry of Food Processing Industries (MoFPI)"
     }
   },
   {
-    "scheme_id": "sch_mudra_03",
-    "name": "Pradhan Mantri MUDRA Yojana (PMMY)",
-    "nodal_agency": "Department of Financial Services / MUDRA Bank",
-    "text": "Pradhan Mantri MUDRA Yojana (PMMY). Collateral-free micro financing for small businesses across Shishu, Kishore, and Tarun loan buckets. Target Categories: Digital Services, Retail, Repair & Services, Livestock & Dairy, Handicraft. Eligibility: {\"collateral_free\": true, \"target_group\": \"Non-corporate, non-farm small/micro enterprises\"} Required Docs: Aadhaar Card, Voter ID / Driving License, Business Address Proof, Quotation of Machinery / Items to be purchased, Bank Statement (Last 6 Months).",
-    "required_documents": [
-      "Aadhaar Card",
-      "Voter ID / Driving License",
-      "Business Address Proof",
-      "Quotation of Machinery / Items to be purchased",
-      "Bank Statement (Last 6 Months)"
-    ],
-    "target_categories": [
-      "Digital Services",
-      "Retail",
-      "Repair & Services",
-      "Livestock & Dairy",
-      "Handicraft"
-    ],
+    "document_id": "sch_mudra_03",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+    "content": "Pradhan Mantri MUDRA Yojana (PMMY). Nodal Agency: Department of Financial Services / MUDRA Bank. Collateral-free micro financing for small businesses across Shishu, Kishore, and Tarun loan buckets. Benefits: {}",
     "metadata": {
-      "source": "Government Scheme Repository",
-      "document": "sch_mudra_03.json",
-      "date": "2026-01-01"
+      "source": "Ministry of Micro, Small & Medium Enterprises (MoMSME)",
+      "dataset": "demo_schemes.json",
+      "date_year": "2026",
+      "location": "Pan-India / Rural",
+      "nodal_agency": "Department of Financial Services / MUDRA Bank"
     }
   },
   {
-    "scheme_id": "sch_nrlm_04",
-    "name": "Deendayal Antyodaya Yojana - NRLM (Micro Enterprise Support)",
-    "nodal_agency": "Ministry of Rural Development",
-    "text": "Deendayal Antyodaya Yojana - NRLM (Micro Enterprise Support). Subsidized interest loans and revolving funds for SHG-affiliated women entrepreneurs embarking on micro-enterprises. Target Categories: Handicraft, Food Processing, Livestock & Dairy, Agriculture. Eligibility: {\"target_group\": \"Self-Help Group (SHG) members and rural women entrepreneurs\", \"repayment_track\": \"Good credit history in SHG\"} Required Docs: SHG Membership Certificate, Aadhaar Card, Passbook of SHG Bank Account, Micro-Investment Plan (MIP).",
-    "required_documents": [
-      "SHG Membership Certificate",
-      "Aadhaar Card",
-      "Passbook of SHG Bank Account",
-      "Micro-Investment Plan (MIP)"
-    ],
-    "target_categories": [
-      "Handicraft",
-      "Food Processing",
-      "Livestock & Dairy",
-      "Agriculture"
-    ],
+    "document_id": "sch_nrlm_04",
+    "title": "Deendayal Antyodaya Yojana - NRLM (Micro Enterprise Support)",
+    "content": "Deendayal Antyodaya Yojana - NRLM (Micro Enterprise Support). Nodal Agency: Ministry of Rural Development. Subsidized interest loans and revolving funds for SHG-affiliated women entrepreneurs embarking on micro-enterprises. Benefits: {}",
     "metadata": {
-      "source": "Government Scheme Repository",
-      "document": "sch_nrlm_04.json",
-      "date": "2026-01-01"
+      "source": "Ministry of Micro, Small & Medium Enterprises (MoMSME)",
+      "dataset": "demo_schemes.json",
+      "date_year": "2026",
+      "location": "Pan-India / Rural",
+      "nodal_agency": "Ministry of Rural Development"
     }
   },
   {
-    "scheme_id": "sch_aif_05",
-    "name": "Agriculture Infrastructure Fund (AIF)",
-    "nodal_agency": "Ministry of Agriculture and Farmers Welfare",
-    "text": "Agriculture Infrastructure Fund (AIF). Medium-long term debt financing facility for investment in viable projects for post-harvest management infrastructure and community farming assets. Target Categories: Agriculture, Food Processing, Agriculture & Services. Eligibility: {\"target_group\": \"Agri-entrepreneurs, FPOs, SHGs, Primary Agricultural Credit Societies\"} Required Docs: Aadhaar / PAN Card, Land Ownership / Lease Records, Detailed Project Report (DPR), Bank Account Details.",
-    "required_documents": [
-      "Aadhaar / PAN Card",
-      "Land Ownership / Lease Records",
-      "Detailed Project Report (DPR)",
-      "Bank Account Details"
-    ],
-    "target_categories": [
-      "Agriculture",
-      "Food Processing",
-      "Agriculture & Services"
-    ],
+    "document_id": "sch_aif_05",
+    "title": "Agriculture Infrastructure Fund (AIF)",
+    "content": "Agriculture Infrastructure Fund (AIF). Nodal Agency: Ministry of Agriculture and Farmers Welfare. Medium-long term debt financing facility for investment in viable projects for post-harvest management infrastructure and community farming assets. Benefits: {}",
     "metadata": {
-      "source": "Government Scheme Repository",
-      "document": "sch_aif_05.json",
-      "date": "2026-01-01"
+      "source": "Ministry of Micro, Small & Medium Enterprises (MoMSME)",
+      "dataset": "demo_schemes.json",
+      "date_year": "2026",
+      "location": "Pan-India / Rural",
+      "nodal_agency": "Ministry of Agriculture and Farmers Welfare"
     }
   }
 ]

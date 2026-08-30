@@ -22,9 +22,8 @@ def retrieve_relevant_documents(query: str, top_k: int = 2) -> List[Dict[str, An
     scored_docs = []
 
     for d in docs:
-        text = d.get("text", "").lower()
+        text = (d.get("content", "") + " " + d.get("title", "")).lower()
         score = 0
-        # Simple keyword vector similarity score
         keywords = q_lower.split()
         for kw in keywords:
             if len(kw) > 3 and kw in text:

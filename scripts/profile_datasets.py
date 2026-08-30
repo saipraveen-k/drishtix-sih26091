@@ -1,7 +1,7 @@
 """
-DrishtiX Dataset Profiling and Inspection Tool (Step 1)
-Inspects every raw dataset in data/raw/ and generates dataset_profile.json and dataset_profile.md.
-Does NOT modify original raw files.
+DrishtiX Dataset Profiling and Inspection Tool (Step 3)
+Inspects raw datasets in data/raw/ (.csv, .xlsx, .json, .parquet) and generates dataset_profile.json and dataset_profile.md.
+Does NOT modify raw files.
 """
 
 import os
@@ -42,13 +42,15 @@ def inspect_file(file_path):
     df_str = df.astype(str)
     duplicates = int(df_str.duplicated().sum())
 
-    # Geographic & Business columns detection
-    geo_cols = [c for c in columns if any(k in c.lower() for k in ["lat", "lon", "lng", "state", "district", "village", "pincode", "zip"])]
+    # Field categorization
+    geo_cols = [c for c in columns if any(k in c.lower() for k in ["lat", "lon", "lng", "state", "district", "block", "mandal", "village", "pincode", "zip"])]
     biz_cols = [c for c in columns if any(k in c.lower() for k in ["business", "name", "category", "enterprise", "activity", "item"])]
+    market_cols = [c for c in columns if any(k in c.lower() for k in ["demand", "competition", "resource", "infra", "price", "cost"])]
 
     # Unique values for key fields if present
     unique_states = []
     unique_districts = []
+    unique_blocks = []
     unique_locations = []
 
     for c in columns:
@@ -57,6 +59,8 @@ def inspect_file(file_path):
             unique_states = df[c].dropna().astype(str).unique().tolist()[:10]
         if "district" in c_lower:
             unique_districts = df[c].dropna().astype(str).unique().tolist()[:10]
+        if "block" in c_lower or "mandal" in c_lower:
+            unique_blocks = df[c].dropna().astype(str).unique().tolist()[:10]
         if "village" in c_lower or "location" in c_lower:
             unique_locations = df[c].dropna().astype(str).unique().tolist()[:10]
 
@@ -86,10 +90,12 @@ def inspect_file(file_path):
         "missing_values_pct": missing_pct,
         "missing_per_column": missing_dict,
         "duplicate_rows": duplicates,
-        "possible_geographic_columns": geo_cols,
-        "possible_business_columns": biz_cols,
+        "geographic_columns": geo_cols,
+        "business_columns": biz_cols,
+        "market_columns": market_cols,
         "unique_states_sample": unique_states,
         "unique_districts_sample": unique_districts,
+        "unique_blocks_sample": unique_blocks,
         "unique_locations_sample": unique_locations,
         "numerical_ranges": num_ranges,
         "suspicious_values": suspicious
@@ -123,8 +129,9 @@ def run_dataset_profiler(raw_dir="data/raw"):
             f.write(f"- **Total Columns**: {p['columns']}\n")
             f.write(f"- **Missing Values**: {p['missing_values_count']} ({p['missing_values_pct']}%)\n")
             f.write(f"- **Duplicate Rows**: {p['duplicate_rows']}\n")
-            f.write(f"- **Geographic Columns**: `{', '.join(p['possible_geographic_columns'])}` \n")
-            f.write(f"- **Business Category Columns**: `{', '.join(p['possible_business_columns'])}` \n\n")
+            f.write(f"- **Geographic Columns**: `{', '.join(p['geographic_columns'])}` \n")
+            f.write(f"- **Business Columns**: `{', '.join(p['business_columns'])}` \n")
+            f.write(f"- **Market Indicator Columns**: `{', '.join(p['market_columns'])}` \n\n")
 
             if p["numerical_ranges"]:
                 f.write("### Numerical Ranges\n")

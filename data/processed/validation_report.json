@@ -1,20 +1,13 @@
 {
-  "file_path": "data/raw/demo_market_data.csv",
-  "rows": 8,
-  "columns": 13,
-  "null_pct": 0.0,
-  "duplicates": 0,
-  "mapped_columns": {
-    "latitude": "latitude",
-    "longitude": "longitude",
-    "state": "state",
-    "district": "district",
-    "village": "village",
-    "pincode": "pincode",
-    "demand_index": "demand_index",
-    "competition_density": "competition_density",
-    "resource_score": "resource_score",
-    "infra_score": "infra_score"
-  },
-  "quality": "HIGH"
+  "file_name": "demo_market_data.csv",
+  "quality_rating": "HIGH",
+  "score": 100,
+  "total_rows": 8,
+  "rows_processed": 8,
+  "rows_rejected": 0,
+  "missing_pct": 0.0,
+  "duplicate_rows": 0,
+  "coverage_level": "Village-level granular",
+  "is_proxy": false,
+  "issues": []
 }

@@ -40,13 +40,19 @@
     "missing_values_pct": 0.0,
     "missing_per_column": {},
     "duplicate_rows": 0,
-    "possible_geographic_columns": [],
-    "possible_business_columns": [
+    "geographic_columns": [],
+    "business_columns": [
       "name",
       "category"
     ],
+    "market_columns": [
+      "resource_requirements",
+      "infrastructure_requirements",
+      "typical_cost_structure"
+    ],
     "unique_states_sample": [],
     "unique_districts_sample": [],
+    "unique_blocks_sample": [],
     "unique_locations_sample": [],
     "numerical_ranges": {
       "investment_min": {
@@ -106,7 +112,7 @@
     "missing_values_pct": 0.0,
     "missing_per_column": {},
     "duplicate_rows": 0,
-    "possible_geographic_columns": [
+    "geographic_columns": [
       "state",
       "district",
       "village",
@@ -115,7 +121,13 @@
       "longitude",
       "population"
     ],
-    "possible_business_columns": [],
+    "business_columns": [],
+    "market_columns": [
+      "demand_index",
+      "competition_density",
+      "resource_score",
+      "infra_score"
+    ],
     "unique_states_sample": [
       "Andhra Pradesh",
       "Telangana",
@@ -134,6 +146,7 @@
       "Ramanagara",
       "Nagaur"
     ],
+    "unique_blocks_sample": [],
     "unique_locations_sample": [
       "Kudair",
       "Raptadu",
@@ -241,12 +254,16 @@
       "interest_subvention": 4
     },
     "duplicate_rows": 0,
-    "possible_geographic_columns": [],
-    "possible_business_columns": [
+    "geographic_columns": [],
+    "business_columns": [
       "name"
+    ],
+    "market_columns": [
+      "max_project_cost"
     ],
     "unique_states_sample": [],
     "unique_districts_sample": [],
+    "unique_blocks_sample": [],
     "unique_locations_sample": [],
     "numerical_ranges": {
       "max_project_cost": {

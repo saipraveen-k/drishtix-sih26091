@@ -1,7 +1,7 @@
 """
-DrishtiX Data Processing and Normalization Script (Step 4)
-Cleans raw datasets, renames columns according to schema_mapping.yaml, handles missing values,
-and saves curated outputs into data/curated/ without touching raw files.
+DrishtiX Data Processing and Normalization Script (Step 6)
+Cleans raw datasets, renames columns according to schema_mapping.yaml, normalizes locations,
+handles missing values, and saves curated outputs into data/curated/ without touching raw files.
 """
 
 import os
@@ -28,12 +28,21 @@ def process_market_data(input_path="data/raw/demo_market_data.csv"):
         print(f"[WARN] Market data file not found at {input_path}")
         return
 
-    df = pd.read_csv(input_path)
+    try:
+        df = pd.read_csv(input_path)
+    except Exception as e:
+        print(f"[WARN] Could not parse raw dataset {input_path}: {e}")
+        return
+
     mappings = load_schema_mapping()
 
-    # 1. Quality Check
+    # 1. Quality Check & Validation Report
     q_report = run_data_quality_checks(df, file_name=os.path.basename(input_path))
-    print(f"[QUALITY REPORT] Rating: {q_report['quality_rating']} | Score: {q_report['score']}/100 | Rows Processed: {q_report['rows_processed']}")
+    print(f"[QUALITY REPORT] File: {q_report['file_name']} | Rating: {q_report['quality_rating']} | Score: {q_report['score']}/100 | Coverage: {q_report['coverage_level']}")
+
+    os.makedirs("data/processed", exist_ok=True)
+    with open("data/processed/validation_report.json", "w", encoding="utf-8") as f:
+        json.dump(q_report, f, indent=2)
 
     # 2. Rename columns based on mapping
     rename_dict = {}
@@ -43,18 +52,30 @@ def process_market_data(input_path="data/raw/demo_market_data.csv"):
                 rename_dict[col] = target_col
     df = df.rename(columns=rename_dict)
 
-    # 3. String Normalization (Title case state, district, village)
-    for col in ["state", "district", "village"]:
+    # 3. Location Normalization (Title case state, district, block, village)
+    for col in ["state", "district", "block", "village"]:
         if col in df.columns:
             df[col] = df[col].astype(str).str.strip().str.title()
 
-    # 4. Fill numerical missing values with median
+    # 4. Generate Canonical Identifiers
+    if "district" in df.columns:
+        df["district_id"] = "dist_" + df["district"].astype(str).str.lower().str.replace(" ", "_")
+    else:
+        df["district_id"] = "dist_unknown"
+
+    if "village" in df.columns:
+        df["village_id"] = "vil_" + df["village"].astype(str).str.lower().str.replace(" ", "_")
+        df["location_key"] = df["district"].astype(str) + "_" + df["village"].astype(str)
+    else:
+        df["village_id"] = "vil_proxy"
+        df["location_key"] = df["district"].astype(str) + "_proxy"
+
+    # 5. Fill numerical missing values with median
     num_cols = df.select_dtypes(include=[np.number]).columns
     for c in num_cols:
         df[c] = df[c].fillna(df[c].median())
 
-    # 5. Save to processed and curated folders
-    os.makedirs("data/processed", exist_ok=True)
+    # 6. Save to processed and curated folders
     os.makedirs("data/curated", exist_ok=True)
 
     proc_path = "data/processed/processed_market_data.csv"
@@ -70,8 +91,12 @@ def process_business_catalog(input_path="data/raw/demo_businesses.json"):
         print(f"[WARN] Business catalog not found at {input_path}")
         return
 
-    with open(input_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    try:
+        with open(input_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"[WARN] Could not parse business catalog {input_path}: {e}")
+        return
 
     os.makedirs("data/processed", exist_ok=True)
     os.makedirs("data/curated", exist_ok=True)

@@ -26,6 +26,13 @@ column_mappings:
     - dist_name
     - District
     - DISTRICT
+  block:
+    - block
+    - mandal
+    - block_name
+    - Block
+    - MANDAL
+    - Mandal
   village:
     - village
     - village_name
