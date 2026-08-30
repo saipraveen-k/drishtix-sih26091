@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CopilotDrawer } from "@/components/CopilotDrawer";
-import { OpportunityCard } from "@/OpportunityCard" in components or inline;
 import { api } from "@/lib/api";
 import { RecommendationResponse } from "@/types";
 import { OpportunityCard as OppCard } from "@/components/OpportunityCard";
