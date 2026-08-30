@@ -1,119 +1,162 @@
-"use client";
-
+import React from "react";
 import Link from "next/link";
 import { OpportunityItem } from "@/types";
-import { CheckCircle2, TrendingUp, ShieldAlert, Award, ArrowRight, DollarSign, Cpu } from "lucide-react";
+import { ScoreRing } from "@/components/ui/ScoreRing";
+import { ProgressBar } from "@/components/ui/ProgressBar";
+import { Badge } from "@/components/ui/Badge";
+import { DataSourceBadge } from "@/components/ui/DataSourceBadge";
+import { ArrowRight, CheckCircle2, AlertTriangle, ShieldCheck } from "lucide-react";
 
 interface OpportunityCardProps {
   opportunity: OpportunityItem;
   rank: number;
 }
 
-export function OpportunityCard({ opportunity, rank }: OpportunityCardProps) {
+export const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, rank }) => {
   const isTopMatch = rank === 1;
 
   return (
-    <div className={`relative rounded-2xl bg-slate-900 border transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5 ${
-      isTopMatch
-        ? "border-emerald-500/50 ring-1 ring-emerald-500/30"
-        : "border-slate-800"
-    }`}>
-      {/* Rank Badge */}
-      <div className="flex items-center justify-between p-6 border-b border-slate-800/80">
+    <div
+      className={`bg-white rounded-3xl border transition-all duration-200 p-6 sm:p-8 space-y-6 ${
+        isTopMatch
+          ? "border-blue-300 shadow-md ring-1 ring-blue-200"
+          : "border-slate-200/90 shadow-sm hover:shadow-md hover:border-slate-300"
+      }`}
+    >
+      {/* Header Row */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
-          <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-            rank === 1 ? "bg-emerald-500 text-slate-950" : rank === 2 ? "bg-blue-500 text-slate-950" : "bg-amber-500 text-slate-950"
-          }`}>
+          <span
+            className={`w-8 h-8 rounded-full font-black text-xs flex items-center justify-center ${
+              isTopMatch ? "bg-blue-600 text-white shadow-sm" : "bg-slate-100 text-slate-700"
+            }`}
+          >
             #{rank}
           </span>
           <div>
-            <h3 className="font-bold text-lg text-white group-hover:text-emerald-400 transition-colors">
-              {opportunity.business_name}
-            </h3>
-            <span className="text-xs text-slate-400 font-medium">{opportunity.category}</span>
+            <div className="flex items-center space-x-2">
+              <h3 className="text-xl font-bold text-slate-900">{opportunity.business_name}</h3>
+              {isTopMatch && <Badge variant="success">BEST MATCH</Badge>}
+            </div>
+            <p className="text-xs text-slate-500 font-medium">{opportunity.category}</p>
           </div>
         </div>
 
-        {/* Score & Confidence */}
-        <div className="flex flex-col items-end">
-          <div className="flex items-baseline space-x-1">
-            <span className="text-2xl font-black text-emerald-400">{opportunity.score}</span>
-            <span className="text-xs text-slate-500 font-semibold">/100</span>
-          </div>
-          <div className="flex items-center space-x-1 mt-0.5">
-            <span className="text-[11px] font-semibold text-slate-400">Confidence {opportunity.confidence}%</span>
-            <span className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${
-              opportunity.confidence_level === "HIGH" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-amber-500/20 text-amber-400"
-            }`}>
-              {opportunity.confidence_level}
-            </span>
-          </div>
+        <div className="flex items-center space-x-4">
+          <ScoreRing score={opportunity.score} size="md" />
         </div>
       </div>
 
       {/* Description */}
-      <div className="p-6 space-y-4">
-        <p className="text-xs text-slate-300 leading-relaxed">
-          {opportunity.description}
-        </p>
+      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+        {opportunity.description}
+      </p>
 
-        {/* Quick Indicators Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-          <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-medium">Est. Capital</span>
-            <span className="font-semibold text-white">₹{(opportunity.investment_min / 100000).toFixed(1)}L - {(opportunity.investment_max / 100000).toFixed(1)}L</span>
-          </div>
-          <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-medium">Market Demand</span>
-            <span className="font-semibold text-emerald-400">{opportunity.demand}</span>
-          </div>
-          <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-medium">Skill Fit</span>
-            <span className="font-semibold text-blue-400">{opportunity.skill_fit}</span>
-          </div>
-          <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-medium">Risk Level</span>
-            <span className={`font-semibold ${opportunity.risk === "LOW" ? "text-emerald-400" : "text-amber-400"}`}>
-              {opportunity.risk} Risk
-            </span>
+      {/* Capital Range & Metrics Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200/80 text-xs">
+        <div>
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Required Capital</span>
+          <span className="font-extrabold text-slate-900">
+            ₹{(opportunity.investment_min / 100000).toFixed(1)}L – ₹{(opportunity.investment_max / 100000).toFixed(1)}L
+          </span>
+        </div>
+        <div>
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Working Capital</span>
+          <span className="font-extrabold text-slate-900">₹{opportunity.working_capital.toLocaleString()}</span>
+        </div>
+        <div>
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Demand Index</span>
+          <span className="font-bold text-emerald-700">{opportunity.demand}</span>
+        </div>
+        <div>
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Operational Risk</span>
+          <span className="font-bold text-blue-700">{opportunity.risk} RISK</span>
+        </div>
+      </div>
+
+      {/* 7-Factor Progress Bars */}
+      {opportunity.score_breakdown && opportunity.score_breakdown.length > 0 && (
+        <div className="space-y-3 pt-2">
+          <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 block">
+            7-Factor Fit Breakdown
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+            {opportunity.score_breakdown.map((f) => (
+              <ProgressBar
+                key={f.factor_name}
+                label={f.factor_name}
+                value={f.score}
+                weight={f.weight_pct}
+              />
+            ))}
           </div>
         </div>
+      )}
 
-        {/* Why Recommended Rationale */}
-        <div className="space-y-1.5 pt-2">
-          <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1">
-            <Award className="w-3.5 h-3.5 text-emerald-400" />
+      {/* Why Recommended Rationale */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-emerald-800 flex items-center space-x-1">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>Why Recommended?</span>
-          </h4>
-          <ul className="space-y-1 text-xs text-slate-300">
-            {opportunity.why_recommended.slice(0, 3).map((reason, idx) => (
-              <li key={idx} className="flex items-start space-x-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                <span>{reason}</span>
+          </span>
+          <ul className="space-y-1.5 text-xs text-slate-700 font-normal">
+            {opportunity.why_recommended.map((w, i) => (
+              <li key={i} className="flex items-start space-x-1.5">
+                <span className="text-emerald-600 font-bold">•</span>
+                <span>{w}</span>
               </li>
             ))}
           </ul>
         </div>
+
+        {opportunity.why_alternatives_lower && opportunity.why_alternatives_lower.length > 0 && (
+          <div className="space-y-2">
+            <span className="text-xs font-bold text-slate-700 flex items-center space-x-1">
+              <AlertTriangle className="w-4 h-4 text-amber-600" />
+              <span>Why Not Alternatives?</span>
+            </span>
+            <ul className="space-y-1.5 text-xs text-slate-600">
+              {opportunity.why_alternatives_lower.map((alt, i) => (
+                <li key={i} className="flex items-start space-x-1.5">
+                  <span className="text-slate-400 font-bold">•</span>
+                  <span>{alt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
-      {/* Action Bar */}
-      <div className="flex items-center justify-between p-4 bg-slate-950/80 border-t border-slate-800/80 rounded-b-2xl">
-        <Link
-          href={`/opportunities/${opportunity.business_id}`}
-          className="text-xs font-semibold text-slate-300 hover:text-white flex items-center space-x-1"
-        >
-          <span>View Detailed Analysis</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+      {/* Data Source Transparency Badge */}
+      <DataSourceBadge
+        sourceName="District Agriculture & Market Survey 2026"
+        freshness="2026-Q1"
+        confidence={opportunity.confidence}
+      />
+
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+        <Link href={`/opportunities/${opportunity.business_id}`} className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all">
+            <span>View 7-Factor Rationale</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </Link>
 
-        <Link
-          href={`/finance/${opportunity.business_id}`}
-          className="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center space-x-1.5 transition-all shadow-md shadow-emerald-600/20"
-        >
-          <DollarSign className="w-3.5 h-3.5" />
-          <span>Financial Digital Twin</span>
-        </Link>
+        <div className="flex items-center space-x-2 w-full sm:w-auto">
+          <Link href={`/finance/${opportunity.business_id}`} className="flex-1 sm:flex-initial">
+            <button className="w-full px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all">
+              Run Survival Simulator
+            </button>
+          </Link>
+          <Link href={`/schemes`} className="flex-1 sm:flex-initial">
+            <button className="w-full px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs border border-slate-300 transition-all">
+              Check Financing
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
-}
+};

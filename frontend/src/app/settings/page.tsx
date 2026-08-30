@@ -2,42 +2,61 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { Settings, ShieldCheck, Cpu, Database } from "lucide-react";
+import { CopilotDrawer } from "@/components/CopilotDrawer";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Settings, Shield, Sliders } from "lucide-react";
 
 export default function SettingsPage() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-          <h1 className="text-2xl font-extrabold text-white">Platform Configuration & Settings</h1>
-          <p className="text-xs text-slate-400 mt-1">DrishtiX Decision Intelligence System (SIH 2026)</p>
-        </div>
-
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4 text-xs">
-          <div className="flex justify-between items-center py-2 border-b border-slate-800">
-            <span className="text-slate-300 font-semibold">Backend API Endpoint:</span>
-            <span className="font-mono text-emerald-400">http://127.0.0.1:8000/api</span>
-          </div>
-
-          <div className="flex justify-between items-center py-2 border-b border-slate-800">
-            <span className="text-slate-300 font-semibold">LLM Provider Mode:</span>
-            <span className="font-mono text-white">Auto (Gemini / OpenAI / Mock Provider)</span>
-          </div>
-
-          <div className="flex justify-between items-center py-2 border-b border-slate-800">
-            <span className="text-slate-300 font-semibold">Dataset Processing Status:</span>
-            <span className="font-mono text-emerald-400">Dataset-Agnostic Engine Ready</span>
-          </div>
-
-          <div className="flex justify-between items-center py-2">
-            <span className="text-slate-300 font-semibold">Vector Store Index:</span>
-            <span className="font-mono text-blue-400">FAISS / JSON Index Active</span>
+      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-6">
+        
+        <div className="bg-white border border-slate-200/80 p-6 rounded-3xl shadow-sm flex items-center space-x-3">
+          <Settings className="w-6 h-6 text-blue-600" />
+          <div>
+            <h1 className="text-2xl font-black text-slate-900">Platform Settings</h1>
+            <p className="text-xs text-slate-500">Configure LLM providers, map tiles, and offline data fallbacks.</p>
           </div>
         </div>
+
+        <Card className="space-y-4">
+          <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500">
+            System & Provider Configuration
+          </h3>
+
+          <div className="space-y-3 text-xs">
+            <div className="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div>
+                <span className="font-bold text-slate-900 block">LLM Assistant Provider:</span>
+                <span className="text-slate-500">Auto (Gemini Flash / OpenAI / Mock Fallback)</span>
+              </div>
+              <Badge variant="success">ONLINE (Mock Active)</Badge>
+            </div>
+
+            <div className="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div>
+                <span className="font-bold text-slate-900 block">GIS Map Engine:</span>
+                <span className="text-slate-500">Leaflet + OpenStreetMap Tile Layer</span>
+              </div>
+              <Badge variant="info">ACTIVE</Badge>
+            </div>
+
+            <div className="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div>
+                <span className="font-bold text-slate-900 block">Deterministic Decision Engine:</span>
+                <span className="text-slate-500">FastAPI Python backend rules engine v2.0</span>
+              </div>
+              <Badge variant="success">DETERMINISTIC</Badge>
+            </div>
+          </div>
+        </Card>
+
       </main>
 
+      <CopilotDrawer />
       <Footer />
     </div>
   );

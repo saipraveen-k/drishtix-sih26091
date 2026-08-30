@@ -3,13 +3,30 @@
 import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 
-interface MapComponentProps {
+export interface MapMarker {
+  lat: number;
+  lng: number;
+  title: string;
+  type?: string;
+}
+
+export interface MapComponentProps {
   lat?: number;
   lng?: number;
   locationName?: string;
+  center?: [number, number];
+  zoom?: number;
+  markers?: MapMarker[];
 }
 
-export function MapComponent({ lat = 14.6819, lng = 77.4521, locationName = "Kudair, Anantapur" }: MapComponentProps) {
+export default function MapComponent({
+  lat = 14.6819,
+  lng = 77.4521,
+  locationName = "Kudair, Anantapur",
+  center,
+  zoom = 12,
+  markers = []
+}: MapComponentProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -18,17 +35,18 @@ export function MapComponent({ lat = 14.6819, lng = 77.4521, locationName = "Kud
 
   if (!mounted) {
     return (
-      <div className="w-full h-80 bg-slate-900 animate-pulse rounded-xl flex items-center justify-center text-slate-500 text-xs font-semibold">
+      <div className="w-full h-full min-h-[350px] bg-slate-100 animate-pulse rounded-2xl flex items-center justify-center text-slate-400 text-xs font-semibold">
         Loading Hyper-Local Map...
       </div>
     );
   }
 
-  // Dynamic import Leaflet for client side rendering
+  const centerLat = center ? center[0] : lat;
+  const centerLng = center ? center[1] : lng;
+
   const { MapContainer, TileLayer, Marker, Popup, Circle } = require("react-leaflet");
   const L = require("leaflet");
 
-  // Fix default marker icon issues in Next.js
   const customIcon = L.icon({
     iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
     shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -38,20 +56,20 @@ export function MapComponent({ lat = 14.6819, lng = 77.4521, locationName = "Kud
   });
 
   return (
-    <div className="w-full h-80 rounded-xl overflow-hidden border border-slate-800 shadow-xl relative">
+    <div className="w-full h-full min-h-[350px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative">
       <MapContainer
-        center={[lat, lng]}
-        zoom={12}
+        center={[centerLat, centerLng]}
+        zoom={zoom}
         scrollWheelZoom={false}
-        className="w-full h-full z-0"
+        className="w-full h-full z-0 min-h-[350px]"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        {/* User Location Marker */}
-        <Marker position={[lat, lng]} icon={customIcon}>
+        {/* Primary Target Location Marker */}
+        <Marker position={[centerLat, centerLng]} icon={customIcon}>
           <Popup>
             <div className="text-slate-900 font-sans p-1">
               <strong className="text-sm block">{locationName}</strong>
@@ -61,41 +79,34 @@ export function MapComponent({ lat = 14.6819, lng = 77.4521, locationName = "Kud
           </Popup>
         </Marker>
 
-        {/* Local Market Catchment Radius */}
+        {/* Catchment Radius */}
         <Circle
-          center={[lat, lng]}
+          center={[centerLat, centerLng]}
           radius={5000}
-          pathOptions={{ color: "#10b981", fillColor: "#10b981", fillOpacity: 0.15 }}
+          pathOptions={{ color: "#2563eb", fillColor: "#2563eb", fillOpacity: 0.15 }}
         />
 
-        {/* Nearby Micro-Business Clusters */}
-        <Marker position={[lat + 0.02, lng + 0.01]} icon={customIcon}>
-          <Popup>
-            <div className="text-slate-900 text-xs">
-              <strong>Grain & Millet Market</strong>
-              <p>Demand Index: 85/100 | Distance: 3.2 km</p>
-            </div>
-          </Popup>
-        </Marker>
-
-        <Marker position={[lat - 0.015, lng - 0.02]} icon={customIcon}>
-          <Popup>
-            <div className="text-slate-900 text-xs">
-              <strong>Cold Storage & Dairy Hub</strong>
-              <p>Infra Score: 78/100 | Distance: 4.5 km</p>
-            </div>
-          </Popup>
-        </Marker>
+        {/* Additional Markers */}
+        {markers.map((m, idx) => (
+          <Marker key={idx} position={[m.lat, m.lng]} icon={customIcon}>
+            <Popup>
+              <div className="text-slate-900 text-xs">
+                <strong>{m.title}</strong>
+                {m.type && <p className="text-[10px] text-slate-500 uppercase">{m.type}</p>}
+              </div>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
 
       {/* Map Legend Overlay */}
-      <div className="absolute bottom-3 left-3 bg-slate-950/90 backdrop-blur-md border border-slate-800 px-3 py-2 rounded-lg z-10 text-[11px] text-slate-300 space-y-1">
+      <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md border border-slate-200 px-3 py-2 rounded-xl z-10 text-[11px] text-slate-700 shadow-sm space-y-1">
         <div className="flex items-center space-x-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-          <span>User Location ({locationName})</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+          <span className="font-semibold">Target Location ({locationName})</span>
         </div>
         <div className="flex items-center space-x-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/30 border border-emerald-500"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-600/30 border border-blue-600"></span>
           <span>5 km Primary Market Catchment</span>
         </div>
       </div>
