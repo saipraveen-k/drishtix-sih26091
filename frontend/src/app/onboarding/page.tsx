@@ -8,31 +8,38 @@ import { CopilotDrawer } from "@/components/CopilotDrawer";
 import { Stepper } from "@/components/ui/Stepper";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { BusinessInterestInput } from "@/components/discovery/BusinessInterestInput";
 import { api } from "@/lib/api";
 import { ProfileData } from "@/types";
-import { MapPin, ArrowRight, ArrowLeft, Check, Sparkles, AlertCircle } from "lucide-react";
+import { MapPin, ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
 
 const SKILL_OPTIONS = [
   "Agriculture",
   "Food Processing",
-  "Livestock & Dairy",
-  "Handicraft & Textiles",
-  "Retail & Trade",
+  "Livestock",
+  "Handicraft",
+  "Retail",
   "Manufacturing",
-  "Repair & Services",
-  "Digital Services",
-  "Transport & Logistics"
+  "Services",
+  "Digital",
+  "Mechanical",
+  "Construction",
+  "Transport",
+  "Hospitality",
+  "Other"
 ];
 
 const RESOURCE_OPTIONS = [
-  "Owned Land",
-  "Commercial Shop",
-  "Vehicle (2/4 Wheeler)",
-  "Machinery / Equipment",
-  "Electricity Connection",
-  "Internet / Mobile Connectivity",
-  "Water Supply",
-  "Raw Materials Nearby"
+  "Land",
+  "Shop",
+  "Vehicle",
+  "Equipment",
+  "Electricity",
+  "Internet",
+  "Water",
+  "Raw Materials",
+  "Storage",
+  "Existing Workforce"
 ];
 
 export default function OnboardingPage() {
@@ -45,8 +52,8 @@ export default function OnboardingPage() {
     age: 29,
     gender: "Male",
     language: "en",
-    business_goal: "first business",
-    experience_level: "some experience",
+    business_goal: "Start a new business",
+    experience_level: "1–3 years",
     existing_business: false,
     available_capital: 150000,
     expected_investment: 200000,
@@ -59,10 +66,23 @@ export default function OnboardingPage() {
     latitude: 14.6819,
     longitude: 77.4521,
     skills: ["Agriculture", "Food Processing"],
-    interests: ["Food Processing", "Manufacturing"]
+    interests: ["Land", "Equipment", "Raw Materials"]
   });
 
-  const steps = ["Goal", "Skills", "Experience", "Capital", "Location", "Resources"];
+  const [interestedBusiness, setInterestedBusiness] = useState("Restaurant");
+  const [businessScale, setBusinessScale] = useState("Small");
+  const [businessReason, setBusinessReason] = useState("Personal interest");
+  const [businessExp, setBusinessExp] = useState("Some experience");
+
+  const steps = [
+    "Goal",
+    "Skills",
+    "Experience",
+    "Capital",
+    "Location",
+    "Resources",
+    "Business Interest"
+  ];
 
   const handleNext = () => {
     if (step < steps.length - 1) {
@@ -99,10 +119,20 @@ export default function OnboardingPage() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
+      // Save profile and interested business state
       await api.saveProfile(formData);
-      router.push("/opportunities");
+      // Persist interested business to localStorage for smooth frontend state loading
+      if (typeof window !== "undefined") {
+        localStorage.setItem("drishtix_user_profile", JSON.stringify(formData));
+        localStorage.setItem("drishtix_interested_business", interestedBusiness);
+      }
+      router.push(`/discover?interest=${encodeURIComponent(interestedBusiness)}`);
     } catch (err) {
-      router.push("/opportunities");
+      if (typeof window !== "undefined") {
+        localStorage.setItem("drishtix_user_profile", JSON.stringify(formData));
+        localStorage.setItem("drishtix_interested_business", interestedBusiness);
+      }
+      router.push(`/discover?interest=${encodeURIComponent(interestedBusiness)}`);
     } finally {
       setLoading(false);
     }
@@ -114,16 +144,16 @@ export default function OnboardingPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
         {/* Header */}
         <div className="text-center space-y-2 mb-6">
-          <span className="text-xs font-bold text-blue-700 bg-blue-100 px-3 py-1 rounded-full uppercase tracking-wider">
-            Entrepreneurship Setup Wizard
+          <span className="text-xs font-extrabold text-blue-700 bg-blue-100 px-3.5 py-1 rounded-full uppercase tracking-wider">
+            DrishtiX Entrepreneurship Onboarding
           </span>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Tell DrishtiX About Yourself</h1>
-          <p className="text-xs sm:text-sm text-slate-600">
-            We use your background and location data to discover micro-enterprises you are most likely to succeed in.
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Your Business Profile &amp; Interest</h1>
+          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
+            Tell DrishtiX what business you want to start. We evaluate its local feasibility and analyze better-suited micro-enterprises.
           </p>
         </div>
 
@@ -135,19 +165,19 @@ export default function OnboardingPage() {
         {/* Form Wizard Step Cards */}
         <Card className="shadow-md">
           
-          {/* STEP 1: GOAL */}
+          {/* SECTION 1: ABOUT YOU (GOAL) */}
           {step === 0 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Step 1: What is your primary business goal?</h3>
-                <p className="text-xs text-slate-500 mt-1">Select the option that best describes your intent.</p>
+                <h3 className="text-lg font-bold text-slate-900">SECTION 1 — ABOUT YOU</h3>
+                <p className="text-xs text-slate-500 mt-1">What is your primary entrepreneurial goal?</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
-                  { id: "first business", title: "Start a New Business", desc: "First-time entrepreneur looking for a primary micro-enterprise." },
-                  { id: "expand business", title: "Expand Existing Enterprise", desc: "Scale up your current unit with new product lines or machinery." },
-                  { id: "additional income", title: "Find Additional Income", desc: "Part-time or seasonal micro-business to supplement household income." }
+                  { id: "Start a new business", title: "Start a New Business", desc: "First-time micro-enterprise creation as your primary income." },
+                  { id: "Expand an existing business", title: "Expand an Existing Business", desc: "Scale up your operational unit with added machinery or lines." },
+                  { id: "Find an additional income source", title: "Find Additional Income Source", desc: "Part-time or seasonal micro-business to supplement household income." }
                 ].map((g) => (
                   <div
                     key={g.id}
@@ -173,12 +203,12 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* STEP 2: SKILLS */}
+          {/* SECTION 2: YOUR SKILLS */}
           {step === 1 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Step 2: What skills or experience do you have?</h3>
-                <p className="text-xs text-slate-500 mt-1">Select all categories you have practical background or interest in.</p>
+                <h3 className="text-lg font-bold text-slate-900">SECTION 2 — YOUR SKILLS</h3>
+                <p className="text-xs text-slate-500 mt-1">Select all categories you have practical background or interest in (multiple selections allowed).</p>
               </div>
 
               <div className="flex flex-wrap gap-2.5">
@@ -191,7 +221,7 @@ export default function OnboardingPage() {
                       onClick={() => toggleSkill(skill)}
                       className={`px-4 py-2.5 rounded-xl border text-xs font-semibold flex items-center space-x-2 transition-all ${
                         isSelected
-                          ? "bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20"
+                          ? "bg-blue-600 text-white border-blue-600 shadow-xs"
                           : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                       }`}
                     >
@@ -204,19 +234,20 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* STEP 3: EXPERIENCE */}
+          {/* SECTION 3: EXPERIENCE */}
           {step === 2 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Step 3: What is your level of business experience?</h3>
-                <p className="text-xs text-slate-500 mt-1">This helps us match manageable operational complexity.</p>
+                <h3 className="text-lg font-bold text-slate-900">SECTION 3 — EXPERIENCE</h3>
+                <p className="text-xs text-slate-500 mt-1">Select your duration of operational experience.</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { id: "no experience", title: "First-Time Entrepreneur (No Experience)", desc: "Requires simple operations, ready templates, and high guidance." },
-                  { id: "some experience", title: "Some Experience (1–3 Years)", desc: "Familiar with local trade, purchasing, and basic accounting." },
-                  { id: "experienced", title: "Experienced (3+ Years)", desc: "Capable of managing workforce, machinery, and credit relations." }
+                  { id: "No experience", title: "No Experience", desc: "First-time entrepreneur; requiring operational templates and high guidance." },
+                  { id: "Less than 1 year", title: "Less than 1 year", desc: "Basic exposure to trade, customer interactions, or family shop." },
+                  { id: "1–3 years", title: "1–3 years", desc: "Familiar with local purchasing, operational management, and accounting." },
+                  { id: "3+ years", title: "3+ years", desc: "Experienced in managing workforce, machinery, credit, and supply chains." }
                 ].map((exp) => (
                   <div
                     key={exp.id}
@@ -242,36 +273,42 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* STEP 4: CAPITAL */}
+          {/* SECTION 4: CAPITAL */}
           {step === 3 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Step 4: Available Capital & Financing</h3>
-                <p className="text-xs text-slate-500 mt-1">Specify how much capital you can invest and your funding requirements.</p>
+                <h3 className="text-lg font-bold text-slate-900">SECTION 4 — CAPITAL</h3>
+                <p className="text-xs text-slate-500 mt-1">Specify your available equity capital and target investment budget.</p>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-xs font-bold text-slate-700 block mb-2">Select Available Personal Capital:</label>
+                  <label className="text-xs font-bold text-slate-700 block mb-2">Suggested Equity Capital Amounts:</label>
                   <div className="flex flex-wrap gap-2">
-                    {[50000, 100000, 150000, 200000, 500000].map((amt) => (
+                    {[
+                      { label: "₹50,000", val: 50000 },
+                      { label: "₹1 Lakh", val: 100000 },
+                      { label: "₹2 Lakh", val: 200000 },
+                      { label: "₹5 Lakh", val: 500000 },
+                      { label: "₹10 Lakh+", val: 1000000 }
+                    ].map((item) => (
                       <button
-                        key={amt}
+                        key={item.val}
                         type="button"
                         onClick={() =>
                           setFormData({
                             ...formData,
-                            available_capital: amt,
-                            desired_loan_amount: Math.max(0, formData.expected_investment - amt)
+                            available_capital: item.val,
+                            desired_loan_amount: Math.max(0, formData.expected_investment - item.val)
                           })
                         }
                         className={`px-4 py-2 rounded-xl border text-xs font-bold transition-all ${
-                          formData.available_capital === amt
+                          formData.available_capital === item.val
                             ? "bg-blue-600 text-white border-blue-600 shadow-xs"
                             : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
                         }`}
                       >
-                        ₹{(amt / 1000).toFixed(0)}K
+                        {item.label}
                       </button>
                     ))}
                   </div>
@@ -279,7 +316,7 @@ export default function OnboardingPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Available Capital (₹):</label>
+                    <label className="text-xs font-bold text-slate-700 block mb-1">Available Capital (₹ Custom):</label>
                     <input
                       type="number"
                       value={formData.available_capital}
@@ -315,8 +352,8 @@ export default function OnboardingPage() {
 
                 <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-xs flex justify-between items-center">
                   <div>
-                    <span className="font-bold text-blue-900 block">Calculated Funding Gap:</span>
-                    <span className="text-slate-600 text-[11px]">Suggested scheme loan requirement</span>
+                    <span className="font-bold text-blue-900 block">Calculated Loan / Scheme Funding Gap:</span>
+                    <span className="text-slate-600 text-[11px]">Recommended PMEGP / MUDRA scheme support</span>
                   </div>
                   <span className="text-base font-black text-blue-700">₹{fundingGap.toLocaleString()}</span>
                 </div>
@@ -324,12 +361,12 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* STEP 5: LOCATION */}
+          {/* SECTION 5: LOCATION */}
           {step === 4 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Step 5: Target Business Location</h3>
-                <p className="text-xs text-slate-500 mt-1">We analyze demand, competition, and infrastructure in your specific village.</p>
+                <h3 className="text-lg font-bold text-slate-900">SECTION 5 — LOCATION</h3>
+                <p className="text-xs text-slate-500 mt-1">Specify state, district, block, and village for hyper-local intelligence.</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -374,33 +411,34 @@ export default function OnboardingPage() {
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-100/70 border border-slate-200 rounded-2xl flex items-center justify-between text-xs">
+              {/* Location Map Preview Box */}
+              <div className="p-4 bg-slate-100 border border-slate-200 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                 <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 text-emerald-600" />
+                  <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span className="font-semibold text-slate-800">
-                    Selected Location: {formData.village}, {formData.district}, {formData.state}
+                    Map Preview: {formData.village}, {formData.block}, {formData.district}, {formData.state} (14.6819° N, 77.4521° E)
                   </span>
                 </div>
                 <button
                   type="button"
-                  onClick={() => alert("GPS Location set to Kudair, Anantapur (14.6819° N, 77.4521° E)")}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-bold text-[11px] text-slate-700 hover:bg-slate-50"
+                  onClick={() => alert("GPS coordinates locked to Kudair, Anantapur")}
+                  className="px-3.5 py-1.5 rounded-lg bg-white border border-slate-300 font-bold text-[11px] text-slate-700 hover:bg-slate-50 transition-all shrink-0"
                 >
-                  Use Current GPS
+                  Use Current Location GPS
                 </button>
               </div>
             </div>
           )}
 
-          {/* STEP 6: RESOURCES */}
+          {/* SECTION 6: AVAILABLE RESOURCES */}
           {step === 5 && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Step 6: Available Infrastructure & Resources</h3>
-                <p className="text-xs text-slate-500 mt-1">Select existing assets to lower initial capital expenditure requirements.</p>
+                <h3 className="text-lg font-bold text-slate-900">SECTION 6 — AVAILABLE RESOURCES</h3>
+                <p className="text-xs text-slate-500 mt-1">Select existing assets to lower initial capital expenditure requirements (multiple allowed).</p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {RESOURCE_OPTIONS.map((res) => {
                   const isSelected = formData.interests.includes(res);
                   return (
@@ -422,6 +460,27 @@ export default function OnboardingPage() {
             </div>
           )}
 
+          {/* SECTION 7: BUSINESS INTEREST */}
+          {step === 6 && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">SECTION 7 — BUSINESS INTEREST</h3>
+                <p className="text-xs text-slate-500 mt-1">Tell DrishtiX what business you would like to start.</p>
+              </div>
+
+              <BusinessInterestInput
+                value={interestedBusiness}
+                onChange={(val) => setInterestedBusiness(val)}
+                scale={businessScale}
+                onScaleChange={(s) => setBusinessScale(s)}
+                reason={businessReason}
+                onReasonChange={(r) => setBusinessReason(r)}
+                experience={businessExp}
+                onExperienceChange={(e) => setBusinessExp(e)}
+              />
+            </div>
+          )}
+
           {/* Navigation Control Buttons */}
           <div className="flex items-center justify-between pt-6 border-t border-slate-100 mt-6">
             <Button
@@ -440,7 +499,13 @@ export default function OnboardingPage() {
               onClick={handleNext}
               disabled={loading}
             >
-              <span>{step === steps.length - 1 ? (loading ? "Analyzing Data..." : "DISCOVER MY OPPORTUNITIES →") : "Next Step"}</span>
+              <span>
+                {step === steps.length - 1
+                  ? loading
+                    ? "Evaluating Interest & Alternatives..."
+                    : "EVALUATE MY BUSINESS INTEREST →"
+                  : "Next Step"}
+              </span>
               {step < steps.length - 1 && <ArrowRight className="w-4 h-4" />}
             </Button>
           </div>

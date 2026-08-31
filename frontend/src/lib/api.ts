@@ -7,7 +7,10 @@ import {
   WhatIfSimulationResponse,
   SchemeItem,
   ReadinessScoreResponse,
-  BusinessPlanResponse
+  BusinessPlanResponse,
+  NormalizeBusinessResponse,
+  InterestEvaluateResponse,
+  JourneyStateResponse
 } from "../types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
@@ -41,16 +44,43 @@ export const api = {
     }),
 
   // Location
-  searchLocations: (q: string) => fetchJSON<any[]>(`/locations/search?q=${encodeURIComponent(q)}`),
-  getMarketData: (locId: string) => fetchJSON<any>(`/market/${locId}`),
+  searchLocations: (q: string) => fetchJSON<Record<string, unknown>[]>(`/locations/search?q=${encodeURIComponent(q)}`),
+  getMarketData: (locId: string) => fetchJSON<Record<string, unknown>>(`/market/${locId}`),
 
-  // Opportunities
+  // Opportunities & Discovery
   getRecommendations: (profile: ProfileData) =>
     fetchJSON<RecommendationResponse>("/opportunities/recommend", {
       method: "POST",
       body: JSON.stringify({ profile }),
     }),
   getOpportunityDetails: (id: string) => fetchJSON<OpportunityItem>(`/opportunities/${id}`),
+
+  normalizeBusiness: (user_input: string) =>
+    fetchJSON<NormalizeBusinessResponse>("/discover/normalize", {
+      method: "POST",
+      body: JSON.stringify({ user_input }),
+    }),
+
+  evaluateInterest: (profile: ProfileData, interested_business: string) =>
+    fetchJSON<InterestEvaluateResponse>("/discover/evaluate-interest", {
+      method: "POST",
+      body: JSON.stringify({ profile, interested_business }),
+    }),
+
+  selectBusinessJourney: (data: {
+    interested_business_name: string;
+    interested_business_id: string;
+    selected_business_id: string;
+    selected_business_name: string;
+    selection_source: string;
+    opportunity_score: number;
+  }) =>
+    fetchJSON<JourneyStateResponse>("/discover/select", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+
+  getJourneyState: () => fetchJSON<JourneyStateResponse>("/discover/journey-state"),
 
   // Finance Twin
   calculateFinance: (req: FinanceCalculateRequest) =>
@@ -86,13 +116,13 @@ export const api = {
     }),
 
   // Copilot
-  chatCopilot: (question: string, context?: any, language: string = "en") =>
+  chatCopilot: (question: string, context?: Record<string, unknown>, language: string = "en") =>
     fetchJSON<{ answer: string; sources_used: string[]; suggested_followups: string[] }>("/copilot/chat", {
       method: "POST",
       body: JSON.stringify({ question, context, language }),
     }),
 
   // Admin
-  getAdminMetrics: () => fetchJSON<any>("/admin/metrics"),
-  rerunDataPipeline: () => fetchJSON<any>("/admin/rerun-pipeline", { method: "POST" }),
+  getAdminMetrics: () => fetchJSON<Record<string, unknown>>("/admin/metrics"),
+  rerunDataPipeline: () => fetchJSON<Record<string, unknown>>("/admin/rerun-pipeline", { method: "POST" }),
 };

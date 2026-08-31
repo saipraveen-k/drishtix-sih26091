@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CopilotDrawer } from "@/components/CopilotDrawer";
+import { BusinessJourneyStepper } from "@/components/discovery/BusinessJourneyStepper";
+import { BusinessContextBanner } from "@/components/discovery/BusinessContextBanner";
 import { OpportunityCard as OppCard } from "@/components/OpportunityCard";
 import { api } from "@/lib/api";
 import { RecommendationResponse } from "@/types";
@@ -129,8 +131,12 @@ export default function OpportunitiesPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
+        {/* Stepper & Active Context Banner */}
+        <BusinessJourneyStepper currentStepIndex={1} />
+        <BusinessContextBanner />
+
         {/* Signature Screen Headline Banner */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/80 p-6 rounded-3xl shadow-sm mb-8">
           <div>

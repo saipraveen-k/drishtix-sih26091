@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Mic, X, Send, Bot, User, Sparkles, Volume2, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Mic, X, Send, Bot, Sparkles, ShieldCheck, CheckCircle2, Check } from "lucide-react";
 import { api } from "@/lib/api";
 
 export function CopilotDrawer() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState<
@@ -12,12 +14,15 @@ export function CopilotDrawer() {
   >([
     {
       sender: "bot",
-      text: "Hello! I am your DrishtiX AI Assistant. I can explain your opportunity match score, financial break-even, or government scheme eligibility. How can I help you?",
+      text: "Hello! I am your DrishtiX AI Assistant. I can explain your opportunity match score, financial break-even, or evaluate a business you are interested in. You can also speak in Hindi or Telugu!",
       sources: ["DrishtiX Decision Engine v2.0", "PMEGP/PMFME Guidelines 2026"]
     }
   ]);
   const [loading, setLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
+
+  // Voice confirmation state
+  const [detectedVoiceInterest, setDetectedVoiceInterest] = useState<string | null>(null);
 
   useEffect(() => {
     const handleOpen = () => setIsOpen(true);
@@ -34,6 +39,16 @@ export function CopilotDrawer() {
     if (!qText) setQuestion("");
     setLoading(true);
 
+    // Detect if user is asking about business interest in voice/text
+    const lower = userMsg.toLowerCase();
+    if (lower.includes("डेयरी") || lower.includes("dairy") || lower.includes("నాకు")) {
+      setDetectedVoiceInterest("Mini Dairy & Milk Product Processing");
+    } else if (lower.includes("मिल्लेट") || lower.includes("millet")) {
+      setDetectedVoiceInterest("Millet Processing & Packaging");
+    } else if (lower.includes("रेस्टोरेंट") || lower.includes("restaurant")) {
+      setDetectedVoiceInterest("Restaurant & Tiffin Center");
+    }
+
     try {
       const res = await api.chatCopilot(userMsg, { page: "opportunity_detail", location: "Kudair" });
       setMessages((prev) => [
@@ -49,7 +64,7 @@ export function CopilotDrawer() {
         ...prev,
         {
           sender: "bot",
-          text: "Millet Processing was ranked #1 (84.8/100) based on strong Kudair market demand (85/100), available capital compatibility (₹1.5L), and abundant local raw material supply.",
+          text: "DrishtiX has evaluated your business interest. Your choice can be compared against top local market recommendations anytime.",
           sources: ["Deterministic Scoring Engine", "District Agriculture Survey"]
         }
       ]);
@@ -62,8 +77,19 @@ export function CopilotDrawer() {
     setIsListening(true);
     setTimeout(() => {
       setIsListening(false);
-      setQuestion("Why was Millet Processing recommended as my top match?");
+      const voiceSample = "मुझे डेयरी फार्मिंग में रुचि है";
+      setQuestion(voiceSample);
+      setDetectedVoiceInterest("Mini Dairy & Milk Product Processing");
     }, 2000);
+  };
+
+  const confirmVoiceInterest = () => {
+    if (detectedVoiceInterest) {
+      const bizName = detectedVoiceInterest;
+      setDetectedVoiceInterest(null);
+      setIsOpen(false);
+      router.push(`/discover?interest=${encodeURIComponent(bizName)}`);
+    }
   };
 
   return (
@@ -95,7 +121,7 @@ export function CopilotDrawer() {
                   <h3 className="font-bold text-sm">Ask DrishtiX Assistant</h3>
                   <p className="text-[10px] text-slate-300 flex items-center space-x-1">
                     <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                    <span>Context-Aware • RAG Verified</span>
+                    <span>English • Hindi (हिंदी) • Telugu (తెలుగు)</span>
                   </p>
                 </div>
               </div>
@@ -107,25 +133,55 @@ export function CopilotDrawer() {
               </button>
             </div>
 
+            {/* Voice Detection Confirmation Banner */}
+            {detectedVoiceInterest && (
+              <div className="p-3.5 bg-blue-50 border-b border-blue-200 text-xs text-blue-900 space-y-2">
+                <div className="flex items-start space-x-2">
+                  <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-extrabold block">Voice Interest Detected:</span>
+                    <p className="text-[11px] text-slate-600">
+                      You said you are interested in: <b>{detectedVoiceInterest}</b>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2 pt-1">
+                  <button
+                    onClick={confirmVoiceInterest}
+                    className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[11px] flex items-center space-x-1"
+                  >
+                    <Check className="w-3 h-3" />
+                    <span>[Confirm &amp; Evaluate]</span>
+                  </button>
+                  <button
+                    onClick={() => setDetectedVoiceInterest(null)}
+                    className="px-3 py-1 bg-white border border-slate-300 text-slate-700 rounded-lg font-bold text-[11px]"
+                  >
+                    [Change]
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Quick Prompt Chips */}
             <div className="p-3 bg-slate-50 border-b border-slate-200 flex flex-wrap gap-1.5 text-[11px]">
+              <button
+                onClick={() => handleSend("मुझे डेयरी फार्मिंग में रुचि है")}
+                className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-semibold hover:border-blue-500 hover:text-blue-600 transition-colors"
+              >
+                🇮🇳 हिंदी: डेयरी फार्मिंग
+              </button>
+              <button
+                onClick={() => handleSend("నాకు మిల్లెట్ ప్రాసెసింగ్లో ఆసక్తి ఉంది")}
+                className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-semibold hover:border-blue-500 hover:text-blue-600 transition-colors"
+              >
+                🇮🇳 తెలుగు: మిల్లెట్
+              </button>
               <button
                 onClick={() => handleSend("Why was Millet Processing recommended?")}
                 className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-semibold hover:border-blue-500 hover:text-blue-600 transition-colors"
               >
                 💡 Why Millet Processing?
-              </button>
-              <button
-                onClick={() => handleSend("What is my monthly break-even units?")}
-                className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-semibold hover:border-blue-500 hover:text-blue-600 transition-colors"
-              >
-                📊 What is my break-even?
-              </button>
-              <button
-                onClick={() => handleSend("Which government scheme gives highest subsidy?")}
-                className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-semibold hover:border-blue-500 hover:text-blue-600 transition-colors"
-              >
-                🏛️ Highest subsidy scheme?
               </button>
             </div>
 
@@ -158,7 +214,7 @@ export function CopilotDrawer() {
               {loading && (
                 <div className="flex items-center space-x-2 text-xs text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                   <Sparkles className="w-4 h-4 text-blue-600 animate-spin" />
-                  <span>DrishtiX is querying deterministic backend model & RAG store...</span>
+                  <span>DrishtiX is querying deterministic backend model &amp; RAG store...</span>
                 </div>
               )}
             </div>
@@ -168,7 +224,7 @@ export function CopilotDrawer() {
               {isListening && (
                 <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-800 flex items-center space-x-2">
                   <Mic className="w-4 h-4 text-blue-600 animate-pulse" />
-                  <span>Listening... Speak your question in English, Hindi, or Telugu.</span>
+                  <span>Listening... Speak your interest in English, Hindi (हिंदी), or Telugu (తెలుగు).</span>
                 </div>
               )}
 
@@ -189,7 +245,7 @@ export function CopilotDrawer() {
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  placeholder="Ask a question about your business match..."
+                  placeholder="Tell DrishtiX what business you want to start..."
                   className="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900"
                 />
 
@@ -209,3 +265,4 @@ export function CopilotDrawer() {
     </>
   );
 }
+

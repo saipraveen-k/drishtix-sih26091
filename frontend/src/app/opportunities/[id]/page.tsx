@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CopilotDrawer } from "@/components/CopilotDrawer";
+import { BusinessJourneyStepper } from "@/components/discovery/BusinessJourneyStepper";
+import { BusinessContextBanner } from "@/components/discovery/BusinessContextBanner";
 import { ScoreRing } from "@/components/ui/ScoreRing";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Card } from "@/components/ui/Card";
@@ -89,8 +91,12 @@ export default function OpportunityDetailPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
         
+        {/* Stepper & Active Context Banner */}
+        <BusinessJourneyStepper currentStepIndex={1} activeBusinessId={opp.business_id} />
+        <BusinessContextBanner currentBusinessName={opp.business_name} />
+
         {/* Back Link */}
         <Link
           href="/opportunities"

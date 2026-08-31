@@ -172,3 +172,19 @@ class UserFeedback(Base):
     comments = Column(Text, nullable=True)
     suggested_category = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class UserJourneyState(Base):
+    __tablename__ = "user_journey_states"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    user_id = Column(String, default="demo_user", index=True)
+    interested_business_name = Column(String, nullable=False)
+    interested_business_id = Column(String, nullable=False)
+    selected_business_id = Column(String, nullable=False)
+    selected_business_name = Column(String, nullable=False)
+    selection_source = Column(String, default="user_interest") # user_interest, recommended_alternative
+    opportunity_score = Column(Float, default=75.0)
+    confidence_level = Column(String, default="HIGH")
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+

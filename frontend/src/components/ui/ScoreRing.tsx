@@ -4,13 +4,17 @@ interface ScoreRingProps {
   score: number;
   size?: "sm" | "md" | "lg";
   label?: string;
+  color?: string;
 }
 
-export const ScoreRing: React.FC<ScoreRingProps> = ({ score, size = "md", label = "Score" }) => {
+export const ScoreRing: React.FC<ScoreRingProps> = ({ score, size = "md", label = "Score", color }) => {
   const rounded = Math.round(score * 10) / 10;
   
-  const strokeColor =
-    rounded >= 80 ? "#16A34A" : rounded >= 60 ? "#2563EB" : "#D97706";
+  let strokeColor = rounded >= 80 ? "#16A34A" : rounded >= 60 ? "#2563EB" : "#D97706";
+  if (color === "emerald") strokeColor = "#16A34A";
+  else if (color === "blue") strokeColor = "#2563EB";
+  else if (color === "amber") strokeColor = "#D97706";
+
   const badgeBg =
     rounded >= 80 ? "bg-emerald-50 text-emerald-700 border-emerald-200" : rounded >= 60 ? "bg-blue-50 text-blue-700 border-blue-200" : "bg-amber-50 text-amber-700 border-amber-200";
 

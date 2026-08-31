@@ -5,7 +5,7 @@ import { ScoreRing } from "@/components/ui/ScoreRing";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Badge } from "@/components/ui/Badge";
 import { DataSourceBadge } from "@/components/ui/DataSourceBadge";
-import { ArrowRight, CheckCircle2, AlertTriangle, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, AlertTriangle } from "lucide-react";
 
 interface OpportunityCardProps {
   opportunity: OpportunityItem;

@@ -133,7 +133,7 @@ export interface BusinessPlanSection {
   title: string;
   content: string;
   is_financial_table?: boolean;
-  table_data?: Record<string, any>;
+  table_data?: Record<string, unknown>;
 }
 
 export interface BusinessPlanResponse {
@@ -143,3 +143,104 @@ export interface BusinessPlanResponse {
   generated_at: string;
   sections: BusinessPlanSection[];
 }
+
+export interface NormalizeBusinessResponse {
+  user_entered_business: string;
+  canonical_business_id: string;
+  canonical_business_name: string;
+  category: string;
+  is_custom: boolean;
+}
+
+export interface WhyReasonItem {
+  type: string;
+  text: string;
+}
+
+export interface SuitabilityMetrics {
+  interest_level: string;
+  personal_fit: number;
+  market_fit: number;
+  financial_fit: number;
+  overall_score: number;
+}
+
+export interface DataTransparencyInfo {
+  data_source: string;
+  source_year: string;
+  geographic_coverage: string;
+  freshness: string;
+  confidence: string;
+  proxy_status: string;
+}
+
+export interface InterestedBusinessEval {
+  user_entered_business: string;
+  canonical_business_id: string;
+  canonical_business_name: string;
+  category: string;
+  description: string;
+  opportunity_score: number;
+  confidence_score: number;
+  confidence_level: string;
+  fit_level: string;
+  investment_min: number;
+  investment_max: number;
+  working_capital: number;
+  factors: Record<string, number>;
+  score_breakdown: FactorBreakdown[];
+  why_reasons: WhyReasonItem[];
+  suitability_metrics: SuitabilityMetrics;
+  data_transparency: DataTransparencyInfo;
+}
+
+export interface AlternativeBusinessItem {
+  business_id: string;
+  business_name: string;
+  category: string;
+  description: string;
+  opportunity_score: number;
+  confidence_score: number;
+  fit_level: string;
+  investment_min: number;
+  investment_max: number;
+  working_capital: number;
+  factors: Record<string, number>;
+  why_better: string[];
+  score_breakdown: FactorBreakdown[];
+}
+
+export interface ComparisonFactorItem {
+  factor_key: string;
+  label: string;
+  user_choice_score: number;
+  best_alt_score: number;
+}
+
+export interface ComparisonSummary {
+  best_alternative: {
+    business_id: string;
+    business_name: string;
+    opportunity_score: number;
+  };
+  factor_matrix: ComparisonFactorItem[];
+}
+
+export interface InterestEvaluateResponse {
+  interested_business: InterestedBusinessEval;
+  alternatives: AlternativeBusinessItem[];
+  comparison: ComparisonSummary;
+}
+
+export interface JourneyStateResponse {
+  user_id: string;
+  interested_business_name: string;
+  interested_business_id: string;
+  selected_business_id: string;
+  selected_business_name: string;
+  selection_source: "user_interest" | "recommended_alternative" | string;
+  opportunity_score: number;
+  confidence_level: string;
+  updated_at: string;
+}
+

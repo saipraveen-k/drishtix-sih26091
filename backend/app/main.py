@@ -5,7 +5,7 @@ from backend.app.core.database import engine, Base
 from backend.app.api import (
     auth, profile, locations, market, opportunities,
     finance, simulation, schemes, readiness, business_plan,
-    copilot, feedback, admin, health
+    copilot, feedback, admin, health, discover
 )
 
 # Initialize Database tables if missing
@@ -34,6 +34,7 @@ app.include_router(profile.router, prefix=settings.API_V1_STR)
 app.include_router(locations.router, prefix=settings.API_V1_STR)
 app.include_router(market.router, prefix=settings.API_V1_STR)
 app.include_router(opportunities.router, prefix=settings.API_V1_STR)
+app.include_router(discover.router, prefix=settings.API_V1_STR)
 app.include_router(finance.router, prefix=settings.API_V1_STR)
 app.include_router(simulation.router, prefix=settings.API_V1_STR)
 app.include_router(schemes.router, prefix=settings.API_V1_STR)

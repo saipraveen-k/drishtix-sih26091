@@ -3,7 +3,7 @@
 Generated for 3 raw dataset files in `data/raw/`.
 
 ## Dataset: `demo_businesses.json` (JSON)
-- **Total Rows**: 9
+- **Total Rows**: 14
 - **Total Columns**: 14
 - **Missing Values**: 0 (0.0%)
 - **Duplicate Rows**: 0
@@ -14,9 +14,9 @@ Generated for 3 raw dataset files in `data/raw/`.
 ### Numerical Ranges
 | Column | Min | Max | Mean |
 | --- | --- | --- | --- |
-| `investment_min` | 40000.0 | 180000.0 | 93333.33 |
-| `investment_max` | 100000.0 | 350000.0 | 202222.22 |
-| `working_capital` | 15000.0 | 45000.0 | 26444.44 |
+| `investment_min` | 40000.0 | 180000.0 | 94642.86 |
+| `investment_max` | 100000.0 | 400000.0 | 212142.86 |
+| `working_capital` | 15000.0 | 50000.0 | 28285.71 |
 
 ---
 

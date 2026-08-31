@@ -9,7 +9,6 @@ import {
   TrendingUp,
   Calculator,
   Award,
-  FileText,
   User,
   Mic,
   Globe,

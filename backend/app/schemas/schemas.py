@@ -242,3 +242,108 @@ class FeedbackCreate(BaseModel):
     is_useful: bool
     comments: Optional[str] = None
     suggested_category: Optional[str] = None
+
+# --- Discovery & Journey Schemas ---
+class NormalizeBusinessRequest(BaseModel):
+    user_input: str
+
+class NormalizeBusinessResponse(BaseModel):
+    user_entered_business: str
+    canonical_business_id: str
+    canonical_business_name: str
+    category: str
+    is_custom: bool
+
+class InterestEvaluateRequest(BaseModel):
+    user_id: Optional[str] = None
+    profile: ProfileCreateUpdate
+    interested_business: str
+
+class WhyReasonItem(BaseModel):
+    type: str
+    text: str
+
+class SuitabilityMetrics(BaseModel):
+    interest_level: str
+    personal_fit: float
+    market_fit: float
+    financial_fit: float
+    overall_score: float
+
+class DataTransparencyInfo(BaseModel):
+    data_source: str
+    source_year: str
+    geographic_coverage: str
+    freshness: str
+    confidence: str
+    proxy_status: str
+
+class InterestedBusinessEval(BaseModel):
+    user_entered_business: str
+    canonical_business_id: str
+    canonical_business_name: str
+    category: str
+    description: str
+    opportunity_score: float
+    confidence_score: float
+    confidence_level: str
+    fit_level: str
+    investment_min: float
+    investment_max: float
+    working_capital: float
+    factors: Dict[str, float]
+    score_breakdown: List[FactorBreakdown]
+    why_reasons: List[WhyReasonItem]
+    suitability_metrics: SuitabilityMetrics
+    data_transparency: DataTransparencyInfo
+
+class AlternativeBusinessItem(BaseModel):
+    business_id: str
+    business_name: str
+    category: str
+    description: str
+    opportunity_score: float
+    confidence_score: float
+    fit_level: str
+    investment_min: float
+    investment_max: float
+    working_capital: float
+    factors: Dict[str, float]
+    why_better: List[str]
+    score_breakdown: List[FactorBreakdown]
+
+class ComparisonFactorItem(BaseModel):
+    factor_key: str
+    label: str
+    user_choice_score: float
+    best_alt_score: float
+
+class ComparisonSummary(BaseModel):
+    best_alternative: Dict[str, Any]
+    factor_matrix: List[ComparisonFactorItem]
+
+class InterestEvaluateResponse(BaseModel):
+    interested_business: InterestedBusinessEval
+    alternatives: List[AlternativeBusinessItem]
+    comparison: ComparisonSummary
+
+class JourneySelectRequest(BaseModel):
+    user_id: Optional[str] = "demo_user"
+    interested_business_name: str
+    interested_business_id: str
+    selected_business_id: str
+    selected_business_name: str
+    selection_source: str # "user_interest" or "recommended_alternative"
+    opportunity_score: float
+
+class JourneyStateResponse(BaseModel):
+    user_id: str
+    interested_business_name: str
+    interested_business_id: str
+    selected_business_id: str
+    selected_business_name: str
+    selection_source: str # "user_interest" or "recommended_alternative"
+    opportunity_score: float
+    confidence_level: str
+    updated_at: str
+

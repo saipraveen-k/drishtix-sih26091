@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Shield, Database, Award, Heart } from "lucide-react";
+import { Shield, Database, Award } from "lucide-react";
 
 export function Footer() {
   return (

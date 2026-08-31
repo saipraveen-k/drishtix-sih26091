@@ -2,7 +2,7 @@
   {
     "filename": "demo_businesses.json",
     "format": "JSON",
-    "rows": 9,
+    "rows": 14,
     "columns": 14,
     "column_names": [
       "id",
@@ -58,17 +58,17 @@
       "investment_min": {
         "min": 40000.0,
         "max": 180000.0,
-        "mean": 93333.33
+        "mean": 94642.86
       },
       "investment_max": {
         "min": 100000.0,
-        "max": 350000.0,
-        "mean": 202222.22
+        "max": 400000.0,
+        "mean": 212142.86
       },
       "working_capital": {
         "min": 15000.0,
-        "max": 45000.0,
-        "mean": 26444.44
+        "max": 50000.0,
+        "mean": 28285.71
       }
     },
     "suspicious_values": []
