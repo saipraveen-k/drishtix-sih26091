@@ -2,7 +2,7 @@ export type Language = "en" | "hi" | "te";
 
 export const translations = {
   en: {
-    brand_name: "DrishtiX",
+    brand_name: "RuralBiz",
     brand_tagline: "Hyper-Local Entrepreneurship Intelligence",
     hero_headline: "Discover the business that's right for you.",
     hero_subtext: "Your skills + your location + your capital + your local market = Hyper-local business success.",

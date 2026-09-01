@@ -38,16 +38,16 @@ export function Navbar() {
           
           {/* Brand Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-black text-xl shadow-md shadow-slate-900/10 group-hover:bg-blue-600 transition-colors">
-              DX
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-black text-xl shadow-md shadow-blue-600/20 group-hover:scale-105 transition-transform">
+              RB
             </div>
             <div>
               <div className="flex items-center space-x-1.5">
                 <span className="font-extrabold text-slate-900 text-lg tracking-tight group-hover:text-blue-600 transition-colors">
-                  DrishtiX
+                  RuralBiz
                 </span>
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-1.5 py-0.5 rounded border border-emerald-200">
-                  SIH26091
+                <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-1.5 py-0.5 rounded border border-blue-200">
+                  Team DrishtiX
                 </span>
               </div>
               <p className="text-[10px] font-medium text-slate-500 hidden sm:block">

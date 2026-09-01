@@ -17,6 +17,8 @@ export interface MapComponentProps {
   center?: [number, number];
   zoom?: number;
   markers?: MapMarker[];
+  onLocationSelect?: (lat: number, lng: number) => void;
+  height?: string;
 }
 
 export default function MapComponent({
@@ -25,7 +27,9 @@ export default function MapComponent({
   locationName = "Kudair, Anantapur",
   center,
   zoom = 12,
-  markers = []
+  markers = [],
+  onLocationSelect,
+  height = "min-h-[350px]"
 }: MapComponentProps) {
   const [mounted, setMounted] = useState(false);
 
@@ -35,7 +39,7 @@ export default function MapComponent({
 
   if (!mounted) {
     return (
-      <div className="w-full h-full min-h-[350px] bg-slate-100 animate-pulse rounded-2xl flex items-center justify-center text-slate-400 text-xs font-semibold">
+      <div className={`w-full h-full ${height} bg-slate-100 animate-pulse rounded-2xl flex items-center justify-center text-slate-400 text-xs font-semibold`}>
         Loading Hyper-Local Map...
       </div>
     );
@@ -44,7 +48,7 @@ export default function MapComponent({
   const centerLat = center ? center[0] : lat;
   const centerLng = center ? center[1] : lng;
 
-  const { MapContainer, TileLayer, Marker, Popup, Circle } = require("react-leaflet");
+  const { MapContainer, TileLayer, Marker, Popup, Circle, useMap, useMapEvents } = require("react-leaflet");
   const L = require("leaflet");
 
   const customIcon = L.icon({
@@ -55,14 +59,36 @@ export default function MapComponent({
     popupAnchor: [1, -34],
   });
 
+  function RecenterMap({ cLat, cLng }: { cLat: number; cLng: number }) {
+    const map = useMap();
+    useEffect(() => {
+      map.setView([cLat, cLng]);
+    }, [cLat, cLng, map]);
+    return null;
+  }
+
+  function MapClickHandler() {
+    useMapEvents({
+      click(e: any) {
+        if (onLocationSelect && e.latlng) {
+          onLocationSelect(e.latlng.lat, e.latlng.lng);
+        }
+      },
+    });
+    return null;
+  }
+
   return (
-    <div className="w-full h-full min-h-[350px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative">
+    <div className={`w-full h-full ${height} rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative`}>
       <MapContainer
         center={[centerLat, centerLng]}
         zoom={zoom}
         scrollWheelZoom={false}
-        className="w-full h-full z-0 min-h-[350px]"
+        className={`w-full h-full z-0 ${height}`}
       >
+        <RecenterMap cLat={centerLat} cLng={centerLng} />
+        {onLocationSelect && <MapClickHandler />}
+
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

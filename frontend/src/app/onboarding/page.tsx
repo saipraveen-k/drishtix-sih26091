@@ -11,7 +11,12 @@ import { Button } from "@/components/ui/Button";
 import { BusinessInterestInput } from "@/components/discovery/BusinessInterestInput";
 import { api } from "@/lib/api";
 import { ProfileData } from "@/types";
-import { MapPin, ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
+import dynamic from "next/dynamic";
+import { MapPin, ArrowRight, ArrowLeft, Check, Sparkles, Navigation, RefreshCw, CheckCircle2, AlertCircle } from "lucide-react";
+
+const MapComponent = dynamic(() => import("@/components/MapComponent"), {
+  ssr: false,
+});
 
 const SKILL_OPTIONS = [
   "Agriculture",
@@ -47,6 +52,10 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+  const [locationSuccess, setLocationSuccess] = useState(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
+
   const [formData, setFormData] = useState<ProfileData>({
     name: "Ramesh Kumar",
     age: 29,
@@ -68,6 +77,80 @@ export default function OnboardingPage() {
     skills: ["Agriculture", "Food Processing"],
     interests: ["Land", "Equipment", "Raw Materials"]
   });
+
+  const reverseGeocode = async (lat: number, lng: number) => {
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+      if (res.ok) {
+        const data = await res.json();
+        const addr = data.address || {};
+        const village = addr.village || addr.suburb || addr.town || addr.hamlet || addr.neighbourhood || formData.village;
+        const block = addr.county || addr.state_district || addr.subdistrict || formData.block;
+        const district = addr.state_district || addr.district || addr.county || formData.district;
+        const state = addr.state || formData.state;
+        const pincode = addr.postcode || formData.pincode;
+
+        setFormData((prev) => ({
+          ...prev,
+          state,
+          district,
+          block,
+          village,
+          pincode: pincode || prev.pincode,
+          latitude: lat,
+          longitude: lng
+        }));
+      }
+    } catch (e) {
+      console.error("Geocoding failed", e);
+    }
+  };
+
+  const handleFetchLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError("Geolocation is not supported by your browser.");
+      return;
+    }
+    setIsFetchingLocation(true);
+    setLocationError(null);
+    setLocationSuccess(false);
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        setFormData((prev) => ({
+          ...prev,
+          latitude: lat,
+          longitude: lng
+        }));
+
+        await reverseGeocode(lat, lng);
+        setIsFetchingLocation(false);
+        setLocationSuccess(true);
+      },
+      (error) => {
+        setIsFetchingLocation(false);
+        if (error.code === error.PERMISSION_DENIED) {
+          setLocationError("Location permission denied. Please allow GPS access or click on the visual map below.");
+        } else {
+          setLocationError("Unable to fetch GPS location. You can select coordinates directly on the map.");
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
+
+  const handleMapLocationSelect = async (lat: number, lng: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      latitude: lat,
+      longitude: lng
+    }));
+    await reverseGeocode(lat, lng);
+    setLocationSuccess(true);
+  };
 
   const [interestedBusiness, setInterestedBusiness] = useState("Restaurant");
   const [businessScale, setBusinessScale] = useState("Small");
@@ -119,9 +202,7 @@ export default function OnboardingPage() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // Save profile and interested business state
       await api.saveProfile(formData);
-      // Persist interested business to localStorage for smooth frontend state loading
       if (typeof window !== "undefined") {
         localStorage.setItem("drishtix_user_profile", JSON.stringify(formData));
         localStorage.setItem("drishtix_interested_business", interestedBusiness);
@@ -149,11 +230,11 @@ export default function OnboardingPage() {
         {/* Header */}
         <div className="text-center space-y-2 mb-6">
           <span className="text-xs font-extrabold text-blue-700 bg-blue-100 px-3.5 py-1 rounded-full uppercase tracking-wider">
-            DrishtiX Entrepreneurship Onboarding
+            RuralBiz Entrepreneurship Onboarding • Team DrishtiX
           </span>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">Your Business Profile &amp; Interest</h1>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
-            Tell DrishtiX what business you want to start. We evaluate its local feasibility and analyze better-suited micro-enterprises.
+            Tell RuralBiz what business you want to start. We evaluate its local feasibility and analyze better-suited micro-enterprises.
           </p>
         </div>
 
@@ -364,11 +445,47 @@ export default function OnboardingPage() {
           {/* SECTION 5: LOCATION */}
           {step === 4 && (
             <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-slate-900">SECTION 5 — LOCATION</h3>
-                <p className="text-xs text-slate-500 mt-1">Specify state, district, block, and village for hyper-local intelligence.</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">SECTION 5 — LOCATION</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">Specify state, district, block, and village or auto-detect via GPS for hyper-local intelligence.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleFetchLocation}
+                  disabled={isFetchingLocation}
+                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-xs shadow-sm transition-all disabled:opacity-60 shrink-0 cursor-pointer"
+                >
+                  {isFetchingLocation ? (
+                    <RefreshCw className="w-4 h-4 animate-spin text-white" />
+                  ) : (
+                    <Navigation className="w-4 h-4 text-white" />
+                  )}
+                  <span>{isFetchingLocation ? "Fetching GPS Location..." : "Fetch Current Location (GPS)"}</span>
+                </button>
               </div>
 
+              {/* Status Alert Banners */}
+              {locationSuccess && (
+                <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Location successfully fetched &amp; mapped to <strong>{formData.village}, {formData.district}</strong>!</span>
+                  </div>
+                  <span className="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">
+                    {(formData.latitude ?? 14.6819).toFixed(4)}° N, {(formData.longitude ?? 77.4521).toFixed(4)}° E
+                  </span>
+                </div>
+              )}
+
+              {locationError && (
+                <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-center space-x-2">
+                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>{locationError}</span>
+                </div>
+              )}
+
+              {/* Location Input Form Fields */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-bold text-slate-700 block mb-1">State:</label>
@@ -376,7 +493,7 @@ export default function OnboardingPage() {
                     type="text"
                     value={formData.state}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -386,7 +503,7 @@ export default function OnboardingPage() {
                     type="text"
                     value={formData.district}
                     onChange={(e) => setFormData({ ...formData, district: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -396,7 +513,7 @@ export default function OnboardingPage() {
                     type="text"
                     value={formData.block}
                     onChange={(e) => setFormData({ ...formData, block: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -406,26 +523,45 @@ export default function OnboardingPage() {
                     type="text"
                     value={formData.village}
                     onChange={(e) => setFormData({ ...formData, village: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
 
-              {/* Location Map Preview Box */}
-              <div className="p-4 bg-slate-100 border border-slate-200 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span className="font-semibold text-slate-800">
-                    Map Preview: {formData.village}, {formData.block}, {formData.district}, {formData.state} (14.6819° N, 77.4521° E)
+              {/* Visual Interactive Map Preview */}
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="w-4 h-4 text-blue-600" />
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Visual Location Map Verification</h4>
+                  </div>
+                  <span className="text-[11px] text-slate-500">
+                    Click anywhere on the map to re-position pin
                   </span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => alert("GPS coordinates locked to Kudair, Anantapur")}
-                  className="px-3.5 py-1.5 rounded-lg bg-white border border-slate-300 font-bold text-[11px] text-slate-700 hover:bg-slate-50 transition-all shrink-0"
-                >
-                  Use Current Location GPS
-                </button>
+
+                <div className="w-full h-[320px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative">
+                  <MapComponent
+                    lat={formData.latitude}
+                    lng={formData.longitude}
+                    locationName={`${formData.village || formData.block}, ${formData.district}`}
+                    zoom={13}
+                    onLocationSelect={handleMapLocationSelect}
+                    height="h-[320px]"
+                  />
+                </div>
+
+                <div className="p-3 bg-slate-100 border border-slate-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span className="font-semibold text-slate-800">
+                      Current Target Hub: {formData.village}, {formData.block}, {formData.district}, {formData.state}
+                    </span>
+                  </div>
+                  <div className="inline-flex items-center space-x-1.5 bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-[11px] font-mono text-slate-700 font-bold">
+                    <span>GPS: {(formData.latitude ?? 14.6819).toFixed(4)}° N, {(formData.longitude ?? 77.4521).toFixed(4)}° E</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -465,7 +601,7 @@ export default function OnboardingPage() {
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">SECTION 7 — BUSINESS INTEREST</h3>
-                <p className="text-xs text-slate-500 mt-1">Tell DrishtiX what business you would like to start.</p>
+                <p className="text-xs text-slate-500 mt-1">Tell RuralBiz what business you would like to start.</p>
               </div>
 
               <BusinessInterestInput

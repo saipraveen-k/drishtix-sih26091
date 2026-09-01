@@ -9,10 +9,10 @@ export function Footer() {
           
           <div className="space-y-3">
             <div className="flex items-center space-x-2 text-white font-extrabold text-lg">
-              <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-xs">
-                DX
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-xs font-bold">
+                RB
               </div>
-              <span>DrishtiX</span>
+              <span>RuralBiz</span>
             </div>
             <p className="text-slate-400 leading-relaxed text-xs">
               Hyper-Local Entrepreneurship Decision Intelligence Platform. Designed for rural and semi-urban micro-entrepreneurs.
@@ -63,7 +63,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500">
-          <p>© 2026 DrishtiX Decision Engine. Built for SIH26091.</p>
+          <p>© 2026 RuralBiz. Built by Team DrishtiX for SIH26091.</p>
           <div className="flex items-center space-x-1 mt-2 sm:mt-0">
             <span>Powered by</span>
             <span className="text-slate-300 font-semibold">Deterministic Math + FAISS RAG</span>
